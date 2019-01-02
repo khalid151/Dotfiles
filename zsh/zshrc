@@ -1,0 +1,116 @@
+autoload -Uz compinit
+autoload -Uz vcs_info
+autoload -Uz zsh-mime-setup
+autoload -Uz run-help
+autoload -Uz add-zsh-hook
+autoload -Uz edit-command-line
+
+zle -N edit-command-line
+
+bindkey -v
+bindkey -M vicmd m edit-command-line
+
+unalias run-help
+alias help=run-help
+
+compinit
+zsh-mime-setup
+
+_check_session() {
+    TTY=`print -P %l`
+    if (( $#TTY > 2 )); then
+        _ERR=''
+    else
+        _ERR=':('
+    fi
+}
+
+add-zsh-hook precmd _check_session
+add-zsh-hook precmd vcs_info
+
+PROMPT='%B%M%b ${vcs_info_msg_0_}%F{yellow}%(!.%F{red}#%f.%%)%f '
+RPROMPT='%(?.%F{grey}%/%f.$_ERR)'
+
+zstyle ':vcs_info:git*' formats "- %F{red}%u%f%F{green}%f %b "
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git*' unstagedstr '𥉉' #'
+
+setopt histignorealldups sharehistory correctall histignoredups histignorespace\
+    autocd prompt_subst
+
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:pacman:*' force-list always
+zstyle ':completion:*:*:pacman:*' menu yes select
+
+# Colored man
+man() {
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
+}
+
+# Window title
+case $TERM in
+  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
+    precmd () {
+        print -Pn "\e]0;Terminal (%c)\a"
+    }
+    preexec () {
+        print -Pn "\e]0;$1\a"
+    }
+    ;;
+  screen|screen-256color)
+    precmd () {
+        print -Pn "\e]83;title \"$1\"\a"
+        print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a"
+    }
+    preexec () {
+        print -Pn "\e]83;title \"$1\"\a"
+        print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a"
+    }
+    ;;
+esac
+
+if [[ $TERM == xterm-termite ]]; then . /etc/profile.d/vte.sh
+  __vte_osc7
+fi
+
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi
+
+export EDITOR=nvim
+export QT_LOGGING_RULES=qt.svg.warning=false
+export PATH=$HOME/.local/bin:$PATH
+
+source $HOME/.aliases
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

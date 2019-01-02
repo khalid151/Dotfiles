@@ -1,0 +1,26 @@
+# vim:set syntax=zsh
+alias :q='exit'
+alias battery='printf "%c %d%%\n" `cat /sys/class/power_supply/BAT1/status` `cat /sys/class/power_supply/BAT1/capacity`'
+alias cls='printf "\033c"'
+alias go-arm='env GOARCH=arm go build'
+alias grep='grep --color=auto'
+alias i3conf='vim ~/.config/i3/config'
+alias install='sudo pacman -S'
+alias ls='ls --color=auto'
+alias orphans='pacman -Qtdq'
+alias pi-g++='arm-linux-gnueabihf-g++'
+alias pkgnum='echo "PKG NUM: $(pacman -Q | wc -l)"'
+alias reload_zsh='source ~/.zshrc'
+alias remove='sudo pacman -Rns'
+alias update='sudo pacman -Syu'
+alias vimconf='vim ~/.config/nvim/init.vim'
+alias vimdiff='nvim -d'
+alias xclips='xclip -selection clipboard'
+
+background(){
+    if (( $#TMUX )); then
+        printf "\ePtmux;\e\e]11;$1\007\e\\"
+    else
+        printf "\e]11;$1\007"
+    fi
+}

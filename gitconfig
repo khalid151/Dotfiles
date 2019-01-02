@@ -1,0 +1,11 @@
+[user]
+	name = Khalid J.
+	email = khalid.y96@outlook.com
+[color]
+	ui = auto
+[core]
+	editor = nvim
+[diff]
+	tool = nvimdiff
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
