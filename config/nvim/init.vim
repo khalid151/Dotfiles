@@ -12,11 +12,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'itchyny/lightline.vim'
 
     " Auto-complete stuff
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/echodoc.vim'
-    Plug 'zchee/deoplete-jedi' " Python auto-complete
-    Plug 'zchee/deoplete-clang'
-    Plug 'Shougo/neoinclude.vim'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Syntax
     Plug 'dart-lang/dart-vim-plugin'
@@ -24,13 +20,14 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'jelera/vim-javascript-syntax'
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'hail2u/vim-css3-syntax'
-    Plug 'PotatoesMaster/i3-vim-syntax'
     Plug 'sheerun/vim-polyglot'
 
     " Others
     Plug 'ryanoasis/vim-devicons'
     Plug 'airblade/vim-gitgutter'
     Plug 'connorholyday/vim-snazzy'
+    Plug 'vimwiki/vimwiki'
+    Plug 'nightsense/snow'
 
 call plug#end()
 
@@ -62,7 +59,12 @@ autocmd InsertLeave * silent! setlocal relativenumber
 " -----------------
 "  Theme options
 " -----------------
-colorscheme snazzy
+set background=dark
+colorscheme snow
+" Change terminal background to match theme
+autocmd VimEnter * silent! exe '!printf "\e]11;'.fnameescape(synIDattr(hlID("normal"), "bg")).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
+autocmd VimLeave * silent! exe '!printf "\e]11;'.fnameescape(g:TERMBG).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
+autocmd ColorScheme * silent! exe '!printf "\e]11;'.fnameescape(synIDattr(hlID("normal"), "bg")).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
 
 " -----------------
 " Mappings
@@ -87,46 +89,34 @@ nnoremap <A-l> <C-w>l
 " -----------------
 " Plug-in settings
 " -----------------
+" coc
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <c-space> coc#refresh()
+nnoremap <silent> <c-K> :call CocAction('doHover') <CR>
 " devIcons
 let g:webdevicons_enable = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:webdevicons_enable_ctrlp = 1
 let g:webdevicons_enable_ctrlp = 1
 let g:workspace_use_devicons = 1
-" Deoplete
-set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
-let g:echodoc#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-autocmd CompleteDone * silent! pclose!
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 " NERDTree
 let g:NERDTreeMouseMode = 1
 let g:NERDTreeMinimalUI = 1
 " Whitespaces
 let g:strip_whitespace_on_save = 1
-" PyMode
-let g:pymode = 1
-let g:pymode_python = 'python3'
-let g:pymode_virtualenv = 0
-let g:pymode_motion = 0
-let g:pymode_indent = 1
-let g:pymode_lint_cwindow = 0
-let g:pymode_options_colorcolumn = 0
-let g:pymode_lint_checkers = ['pep8']
-let g:pymode_lint_on_fly = 1
-let g:pymode_lint_message = 1
-let g:pymode_lint_todo_symbol = ''
-let g:pymode_lint_error_symbol = ''
-let g:pymode_lint_comment_symbol = ''
-let g:pymode_rope = 0
-let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
 " Lightline
 let g:lightline = {
       \ 'colorscheme': 'snazzy',
+      \ 'active': {
+      \  'left': [['mode', 'paste'],
+      \           ['readonly', 'filename', 'modified']],
+      \  'right': [['filetype'],
+      \            ['percent', 'lineinfo'],
+      \            ['coc_status']]
+      \ },
       \ 'component_function': {
+      \ 'coc_status': 'coc#status',
       \ 'filetype': 'Filetype',
       \ 'fileformat': 'Fileformat',
       \ }
@@ -145,4 +135,3 @@ endfunction
 " Other stuff
 " -----------------
 let g:session_directory = "~/.config/nvim/session"
-let g:python_highlight_space_errors = 0

@@ -1,11 +1,13 @@
 # vim:set syntax=zsh
 alias :q='exit'
-alias battery='printf "%c %d%%\n" `cat /sys/class/power_supply/BAT1/status` `cat /sys/class/power_supply/BAT1/capacity`'
+alias battery='printf "%c %d%%\n" `cat /sys/class/power_supply/BAT0/status` `cat /sys/class/power_supply/BAT0/capacity`'
 alias cls='printf "\033c"'
 alias go-arm='env GOARCH=arm go build'
 alias grep='grep --color=auto'
+alias hex='hyx'
 alias i3conf='vim ~/.config/i3/config'
 alias install='sudo pacman -S'
+alias ipython='ipython --no-banner'
 alias ls='ls --color=auto'
 alias orphans='pacman -Qtdq'
 alias pi-g++='arm-linux-gnueabihf-g++'
@@ -13,9 +15,19 @@ alias pkgnum='echo "PKG NUM: $(pacman -Q | wc -l)"'
 alias reload_zsh='source ~/.zshrc'
 alias remove='sudo pacman -Rns'
 alias update='sudo pacman -Syu'
-alias vimconf='vim ~/.config/nvim/init.vim'
+alias vi='start_vim'
+alias vim='start_vim'
+alias nvim='start_vim'
 alias vimdiff='nvim -d'
 alias xclips='xclip -selection clipboard'
+alias youtube-dl='youtube-dl --external-downloader aria2c'
+alias wine32='WINEPREFIX=$HOME/.wine/32 wine'
+alias wine64='WINEPREFIX=$HOME/.wine/64 wine'
+
+start_vim(){
+    BG=`awk '/^\[colors\]/,/^background/ {if ($1 == "background") print $NF}' ~/.config/termite/config`
+    /usr/bin/nvim -c "let g:ZSH_PID=$$" -c "let g:TERMBG=\"$BG\"" $@
+}
 
 background(){
     if (( $#TMUX )); then
