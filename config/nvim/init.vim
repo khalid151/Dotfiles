@@ -30,7 +30,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nightsense/snow'
 
 call plug#end()
-
 " -----------------
 " General options
 " -----------------
@@ -65,7 +64,6 @@ colorscheme snow
 autocmd VimEnter * silent! exe '!printf "\e]11;'.fnameescape(synIDattr(hlID("normal"), "bg")).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
 autocmd VimLeave * silent! exe '!printf "\e]11;'.fnameescape(g:TERMBG).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
 autocmd ColorScheme * silent! exe '!printf "\e]11;'.fnameescape(synIDattr(hlID("normal"), "bg")).'\007" > /proc/'.g:ZSH_PID.'/fd/0'
-
 " -----------------
 " Mappings
 " -----------------
@@ -86,14 +84,14 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
-" -----------------
-" Plug-in settings
-" -----------------
 " coc
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 nnoremap <silent> <c-K> :call CocAction('doHover') <CR>
+" -----------------
+" Plug-in settings
+" -----------------
 " devIcons
 let g:webdevicons_enable = 1
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
