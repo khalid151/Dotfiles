@@ -107,10 +107,7 @@ else
         export TERM='xterm-color'
 fi
 
-export EDITOR=nvim
-export QT_LOGGING_RULES=qt.svg.warning=false
-export PATH=$HOME/.local/bin:$PATH
-
 source $HOME/.aliases
+source $HOME/.exports
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

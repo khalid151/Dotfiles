@@ -10,14 +10,11 @@ else
 fi
 
 echo "Creating symbolic links"
-for CONFIG in config/*; do
-   ln -s `pwd`/$CONFIG $CONFIG_PATH/
-done
-
+ln -s `pwd`/config $CONFIG_PATH
 ln -s `pwd`/gitconfig $HOME/.gitconfig
-
-ln -s `pwd`/zsh/zshrc $HOME/.zshrc
-ln -s `pwd`/zsh/aliases $HOME/.aliases
+for CONFIG in zsh/*; do
+    ln -s `pwd`/$CONFIG $HOME/${CONFIG/zsh\//.}
+done
 
 echo "Installing ranger devicons"
 cd /tmp
