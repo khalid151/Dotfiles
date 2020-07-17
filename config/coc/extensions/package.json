@@ -1,7 +1,10 @@
 {
   "dependencies": {
-    "coc-python": ">=1.2.6",
-    "coc-json": ">=1.2.3",
-    "coc-highlight": ">=1.2.5"
+    "coc-flutter": ">=1.4.1",
+    "coc-highlight": ">=1.2.5",
+    "coc-json": ">=1.2.6",
+    "coc-lua": ">=0.1.1",
+    "coc-python": ">=1.2.12",
+    "coc-snippets": ">=2.1.28"
   }
 }
