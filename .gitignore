@@ -3,3 +3,19 @@ config/*
 !config/nvim/init.vim
 !config/nvim/coc-settings.json
 !config/ranger/rc.conf
+
+# AwesomeWM
+!config/awesome/
+config/awesome/*
+!config/awesome/rc.lua
+!config/awesome/keys.lua
+!config/awesome/helper.lua
+!config/awesome/widgets.lua
+!config/awesome/titlebar.lua
+!config/awesome/notifications.lua
+# AwesomeWM bar dir
+!config/awesome/bar/
+config/awesome/bar/*
+!config/awesome/bar/new.lua
+# AwesomeWM widgets
+!config/awesome/widgets
