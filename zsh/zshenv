@@ -1,5 +1,8 @@
 # vim:set syntax=zsh
+export ANDROID_HOME=$HOME/.Android/Sdk/
 export EDITOR=nvim
+export LESS=-RiFX
 export QT_LOGGING_RULES=qt.svg.warning=false
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/.local/share/flutter/bin
+export PYTHONPATH=$PYTHONPATH:$HOME/Documents/Code/Python

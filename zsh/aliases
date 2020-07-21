@@ -1,7 +1,9 @@
 # vim:set syntax=zsh
 alias :q='exit'
+alias ard='arduino-cli'
 alias battery='printf "%c %d%%\n" `cat /sys/class/power_supply/BAT0/status` `cat /sys/class/power_supply/BAT0/capacity`'
 alias cls='printf "\033c"'
+alias diff='diff --color'
 alias go-arm='env GOARCH=arm go build'
 alias grep='grep --color=auto'
 alias hex='hyx'
@@ -15,18 +17,13 @@ alias pkgnum='echo "PKG NUM: $(pacman -Q | wc -l)"'
 alias reload_zsh='source ~/.zshrc'
 alias remove='sudo pacman -Rns'
 alias update='sudo pacman -Syu'
-alias vi='start_vim'
-alias vim='start_vim'
-alias nvim='start_vim'
 alias vimdiff='nvim -d'
 alias xclips='xclip -selection clipboard'
-alias youtube-dl='youtube-dl --external-downloader aria2c'
-alias wine32='WINEPREFIX=$HOME/.wine/32 wine'
-alias wine64='WINEPREFIX=$HOME/.wine/64 wine'
+alias ydl='youtube-dl'
 
-start_vim(){
-    BG=`awk '/^\[colors\]/,/^background/ {if ($1 == "background") print $NF}' ~/.config/termite/config`
-    /usr/bin/nvim -c "let g:ZSH_PID=$$" -c "let g:TERMBG=\"$BG\"" $@
+vi vim nvim(){
+    BG=`xtermcontrol --get-bg | sed -r 's/rgb:/#/; s/.{2}\///g; s/.{2}$//'`
+    /usr/bin/nvim -c "let g:terminal_bg=\"$BG\"" $@
 }
 
 background(){
