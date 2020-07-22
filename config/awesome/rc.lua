@@ -11,12 +11,6 @@ local ruled = require("ruled")
 local wibox = require("wibox")
 local widgets = require("widgets")
 local hotkeys_popup = widgets.hotkeys_popup
-local exit_confirm = widgets.confirm_dialogue {
-    action = function() awesome.quit() end,
-    text = "Exit?",
-    width = 50,
-    visible = false,
-}
 
 require("awful.autofocus")
 
@@ -31,20 +25,13 @@ variables.mainmenu = awful.menu({
     { "Terminal", variables.term },
     { "Hotkeys", function() hotkeys_popup:show_help(nil, awful.screen.focused()) end },
     { "Restart", awesome.restart },
-    { "Quit", function() exit_confirm.visible = true end },
 })
 
 menubar.utils.terminal = variables.term
 local keys = require("keys")
 
 -- SET DESKTOP ----------------------------------------------------------------
-local function set_wallpaper(s)
-    --if beautiful.wallpaper then
-        --awful.spawn("feh --bg-fill " .. beautiful.wallpaper)
-    --end
-    gears.wallpaper.set(beautiful.wallpaper_color)
-end
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", beautiful.set_wallpaper)
 
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
@@ -55,11 +42,10 @@ tag.connect_signal("request::default_layouts", function()
         awful.layout.suit.tile.top,
         awful.layout.suit.max,
     })
-
 end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
-    set_wallpaper(s)
+    beautiful.set_wallpaper(s)
     local l = awful.layout.suit
     helper.add_tags(s, {
         {
@@ -125,7 +111,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
 end)
 
 require("titlebar")
-require("bar.new")
+require("bar." .. beautiful.bar_name)
+if beautiful.bar_toggle_opacity then
+    require("bar.fade")
+end
 
 -- RULES ----------------------------------------------------------------------
 ruled.client.connect_signal("request::rules", function()
@@ -289,11 +278,13 @@ end)
 
 -- SIGNALS --------------------------------------------------------------------
 client.connect_signal("unfocus", function (c)
-    if not helper.delayed_focus_signal.started then
-        helper.delayed_focus_signal:start()
+    if c then
+        if not helper.delayed_focus_signal.started then
+            helper.delayed_focus_signal:start()
+        end
+        c.border_color = beautiful.border_normal
+        c.border_width = beautiful.border_width
     end
-    c.border_color = beautiful.border_normal
-    c.border_width = beautiful.border_width
 end)
 
 client.connect_signal("focus", function (c)
@@ -351,8 +342,11 @@ client.connect_signal("request::manage", function (c)
 end)
 
 client.connect_signal("property::geometry", function(c)
-    if awful.screen.focused().selected_tag.layout.name == "floating" or c.floating then
-        c.last_geometry = c:geometry()
+    local tag = awful.screen.focused().selected_tag
+    if tag then
+        if tag.layout.name == "floating" or c.floating then
+            c.last_geometry = c:geometry()
+        end
     end
 end)
 
@@ -361,7 +355,6 @@ tag.connect_signal("property::layout", function()
     if tag.layout.name == "floating" then
         for _,c in ipairs(tag:clients()) do c:geometry(c.last_geometry) end
     end
-    helper.delayed_gaps_signal:start()
 end)
 
 tag.connect_signal("property::tag_changed", function()

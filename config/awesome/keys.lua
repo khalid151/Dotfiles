@@ -14,9 +14,6 @@ local keys = {
     tab = "Tab",
 }
 
--- The signal is used to check for gaps when switching between tags
-local tag_signal = helper.delayed_gaps_signal
-
 -- Create a table to control clients through a menu
 local controls = {
     client = nil, -- Will be set before menu is toggled
@@ -38,7 +35,7 @@ keys.tasklist_buttons = gears.table.join(
             else
                 if awful.screen.focused().selected_tag ~= c.first_tag then
                     c.first_tag:view_only()
-                    tag_signal:start()
+                    tag.emit_signal("property::tag_changed")
                 end
                 c:emit_signal("request::activate", "tasklist", {raise = true})
             end
@@ -74,9 +71,9 @@ awful.keyboard.append_global_keybindings({
             {description = "Select next layout", group = "Layout"}),
     awful.key({keys.mod, keys.shift}, "space", function() awful.layout.inc(-1) end,
             {description = "Select previous layout", group = "Layout"}),
-    awful.key({keys.mod}, "equal", function() awful.tag.incgap(5, nil); tag.emit_signal("property::gaps") end,
+    awful.key({keys.mod}, "equal", function() awful.tag.incgap(5, nil) end,
             {description = "Increment gaps size for the current tag", group = "Layout"}),
-    awful.key({keys.mod}, "minus", function() awful.tag.incgap(-5, nil); tag.emit_signal("property::gaps") end,
+    awful.key({keys.mod}, "minus", function() awful.tag.incgap(-5, nil) end,
             {description = "Decrement gap size for the current tag", group = "Layout"}),
     awful.key({keys.mod}, "l", function() awful.tag.incmwfact( 0.05) end,
             {description = "Increase master width factor", group = "Layout"}),
@@ -158,7 +155,6 @@ client.connect_signal("request::default_keybindings", function()
         awful.key({keys.mod}, "f", function(c)
                     c.maximized = not c.maximized
                     c:raise()
-                    tag.emit_signal("property::gaps")
                 end,
                 {description = "Toggle maximize", group = "Client"}),
         awful.key({keys.mod}, "t", function(c)
@@ -275,7 +271,6 @@ awful.keyboard.append_global_keybindings({
             local tag = screen.tags[index]
             if tag then
                 tag:view_only()
-                tag_signal:again()
                 tag:emit_signal("property::tag_changed")
             end
         end,

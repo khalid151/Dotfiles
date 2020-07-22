@@ -43,16 +43,24 @@ theme.lockscreen = theme_path .. "/lockscreen.png"
 theme.useless_gap = 0
 theme.widget_icon_margin = dpi(5)
 
+theme.set_wallpaper = function()
+    gears.wallpaper.set(theme.wallpaper_color)
+end
+
 -- Shapes ---------------------------------------------------------------------
 theme.rounded_rect = function(cr, width, height)
     gears.shape.rounded_rect(cr, width, height, 5)
 end
 
 -- Bar config -----------------------------------------------------------------
+theme.bar_name = theme_name
+theme.bar_bg = theme.bg
 theme.bar_height = dpi(35)
 theme.bar_position = "top"
 theme.bar_ontop = false
-theme.bar_opacity = 255
+theme.bar_min_opacity = 100
+theme.bar_max_opacity = 255
+theme.bar_toggle_opacity = true
 
 -- Hotkeys config -------------------------------------------------------------
 theme.hotkeys_bg = theme.fg .. "d0"

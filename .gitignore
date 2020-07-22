@@ -18,6 +18,7 @@ config/awesome/*
 !config/awesome/bar/
 config/awesome/bar/*
 !config/awesome/bar/new.lua
+!config/awesome/bar/fade.lua
 # AwesomeWM widgets
 !config/awesome/widgets
 # AwesomeWM theme

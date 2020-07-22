@@ -77,13 +77,69 @@ screen.connect_signal("request::desktop_decoration", function(s)
         end
     end)
 
+    -- Create a table of widgets here, to ease wrapping it inside containers
+    local rhs_bar_widgets = {
+        notification_count_widget,
+        --widgets.space,
+        widgets.systray {
+            show_icon = beautiful.arrow_icon_left,
+            hide_icon = beautiful.arrow_icon_right,
+            toggle_bg = true,
+            bg = beautiful.bg_systray,
+            shape = beautiful.rounded_rect,
+        },
+        volume,
+        brightness,
+        battery,
+        widgets.space,
+        widgets.separator("white"),
+        widgets.space,
+        widgets.toggle_widget {
+            show_icon = "/usr/share/icons/ePapirus/24x24/apps/system-users.svg",
+            hide_icon = "/usr/share/icons/ePapirus/24x24/apps/system-log-out.svg",
+            widget = wibox.widget {
+                    {
+                        image = "/usr/share/icons/ePapirus/24x24/apps/system-lock-screen.svg",
+                        widget = wibox.widget.imagebox,
+                    },
+                    widgets.imagebox_button {
+                        action = function()
+                            local c = confirm_dialogues.reboot
+                            awful.placement.top_right(c, {
+                                    margins = 5,
+                                    offset = { y = beautiful.bar_height },
+                                })
+                            c.visible = not c.visible
+                        end,
+                        image = "/usr/share/icons/ePapirus/24x24/apps/system-reboot.svg",
+                    },
+                    widgets.imagebox_button {
+                        action = function()
+                            local c = confirm_dialogues.poweroff
+                            c.visible = not c.visible
+                            awful.placement.top_right(c, {
+                                    margins = 5,
+                                    offset = { y = beautiful.bar_height },
+                                })
+                        end,
+                        image = "/usr/share/icons/ePapirus/24x24/apps/system-shutdown.svg",
+                    },
+                    spacing = 2,
+                    layout = wibox.layout.fixed.horizontal
+            }
+        },
+        spacing = 2,
+        layout = wibox.layout.fixed.horizontal
+    }
+
     s.bar = awful.wibar {
         screen = s,
-        bg = beautiful.bg,
+        bg = beautiful.bar_bg,
         ontop = beautiful.bar_ontop,
         position = beautiful.bar_position,
         height = beautiful.bar_height
     }
+
     s.bar:setup {
         {
             widgets.tasks_launcher_combo {
@@ -107,59 +163,16 @@ screen.connect_signal("request::desktop_decoration", function(s)
         {
             {
                 {
-                    notification_count_widget,
-                    --widgets.space,
-                    widgets.systray {
-                        show_icon = beautiful.arrow_icon_left,
-                        hide_icon = beautiful.arrow_icon_right,
-                        toggle_bg = true,
-                        bg = beautiful.bg_systray,
-                        shape = beautiful.rounded_rect,
+                    {
+                        rhs_bar_widgets,
+                        margins = beautiful.widget_icon_margin,
+                        widget = wibox.container.margin
                     },
-                    volume,
-                    brightness,
-                    battery,
-                    widgets.space,
-                    widgets.separator("white"),
-                    widgets.space,
-                    widgets.toggle_widget {
-                        show_icon = "/usr/share/icons/ePapirus/24x24/apps/system-users.svg",
-                        hide_icon = "/usr/share/icons/ePapirus/24x24/apps/system-log-out.svg",
-                        widget = wibox.widget {
-                                {
-                                    image = "/usr/share/icons/ePapirus/24x24/apps/system-lock-screen.svg",
-                                    widget = wibox.widget.imagebox,
-                                },
-                                widgets.imagebox_button {
-                                    action = function()
-                                        local c = confirm_dialogues.reboot
-                                        awful.placement.top_right(c, {
-                                                margins = 5,
-                                                offset = { y = beautiful.bar_height },
-                                            })
-                                        c.visible = not c.visible
-                                    end,
-                                    image = "/usr/share/icons/ePapirus/24x24/apps/system-reboot.svg",
-                                },
-                                widgets.imagebox_button {
-                                    action = function()
-                                        local c = confirm_dialogues.poweroff
-                                        c.visible = not c.visible
-                                        awful.placement.top_right(c, {
-                                                margins = 5,
-                                                offset = { y = beautiful.bar_height },
-                                            })
-                                    end,
-                                    image = "/usr/share/icons/ePapirus/24x24/apps/system-shutdown.svg",
-                                },
-                                spacing = 2,
-                                layout = wibox.layout.fixed.horizontal
-                        }
-                    },
-                    spacing = 2,
-                    layout = wibox.layout.fixed.horizontal
+                    bg = beautiful.bg .. "de",
+                    shape = beautiful.rounded_rect,
+                    widget = wibox.widget.background,
                 },
-                margins = beautiful.widget_icon_margin + 3,
+                margins = 3,
                 widget = wibox.container.margin
             },
             spacing = 5,
