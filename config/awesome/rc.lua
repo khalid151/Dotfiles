@@ -148,16 +148,19 @@ ruled.client.connect_signal("request::rules", function()
                     c.icon = helper.icon_surface(icon)
                 end
 
-                -- Set PPID of PPID for each client // Terminal(PPID2) > Shell(PPID1) > Client
-                -- TODO: find a way to tell if the window was run from multiple shells. Recursion?
                 if beautiful.swallow_enabled then
-                    if c.pid then
-                        awful.spawn.easy_async("ps -oppid= -p" .. c.pid, function(o1)
-                            awful.spawn.easy_async("ps -oppid= -p" .. o1, function(o2)
-                                c.ppid = tonumber(o2)
-                            end)
-                        end)
+                    local function set_ppid(c, pid)
+                        if c then
+                            if pid ~= 1 then
+                                awful.spawn.easy_async("ps -oppid= -p " .. pid, function(stdout)
+                                    tostring(c)
+                                    c.ppid = tonumber(pid)
+                                    set_ppid(c, tonumber(stdout))
+                                end)
+                            end
+                        end
                     end
+                    set_ppid(c, c.pid)
                 end
             end
         }
@@ -183,7 +186,7 @@ ruled.client.connect_signal("request::rules", function()
     -- To help determine terminals for window swallow thing
     ruled.client.append_rule {
         id = "terminal",
-        rule = {class = "Termite"},
+        rule_any = {class = {"Termite", "Alacritty"}},
         properties = {
             callback = function(c)
                 c.terminal = true

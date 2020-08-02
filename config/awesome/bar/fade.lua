@@ -19,7 +19,6 @@ animation:connect_signal("anim::animation_updated", function(a)
     if a.screen.bar.fade ~= a.transparent then
         local opacity = math.floor(math.abs(a.subject.fade - beautiful.bar_max_opacity * a.transparent))
         opacity = opacity + (beautiful.bar_min_opacity * a.transparent)
-        print(opacity, math.floor(a.subject.fade))
         a.screen.bar.bg = string.format("%s%x", beautiful.bar_bg, opacity)
     end
 end)
