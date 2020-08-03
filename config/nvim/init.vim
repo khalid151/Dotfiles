@@ -30,6 +30,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'majutsushi/tagbar'
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+    Plug 'morhetz/gruvbox'
+    Plug 'honza/vim-snippets'
 
 call plug#end()
 " -----------------
@@ -69,14 +71,14 @@ augroup END
 "  Theme options
 " -----------------
 set background=dark
-colorscheme wombat256grf
+colorscheme gruvbox
 " Change terminal background to match theme
 augroup theme
     au!
     " Change terminal bg according to theme bg
-    autocmd VimEnter * silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG())
+    autocmd VimEnter * if exists("g:terminal_bg") | silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG()) | endif
     autocmd VimLeave * silent! :call WriteEscapeSequence("\e]11;" . fnameescape(g:terminal_bg))
-    autocmd ColorScheme * silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG())
+    autocmd ColorScheme * if exists("g:terminal_bg") | silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG()) | endif
 augroup END
 " -----------------
 " Mappings
@@ -107,6 +109,9 @@ nnoremap <silent> <A-C-h> :vert res -5 <CR>
 " coc
 nmap <silent><Leader>gd <Plug>(coc-definition)
 nmap <silent><Leader>gr <Plug>(coc-references)
+nmap <silent><Leader>gi <Plug>(coc-implementation)
+nmap <silent><Leader>gy <Plug>(coc-type-definition)
+nmap <silent><Leader>rn <Plug>(coc-rename)
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -115,6 +120,8 @@ inoremap <expr> <CR> pumvisible() ? (complete_info().selected == -1 ? "\<CR>" : 
 nnoremap <silent> <c-K> :call CocAction('doHover') <CR>
 " coc-flutter
 nnoremap <Leader>fc :CocList --input=flutter commands <CR>
+nnoremap <Leader>fr :CocCommand flutter.dev.hotReload <CR>
+nnoremap <Leader>fR :CocCommand flutter.dev.hotRestart <CR>
 " find files in path
 set path+=**
 nnoremap <Leader>ff :find<space>
@@ -136,7 +143,7 @@ let g:NERDTreeMinimalUI = 1
 let g:strip_whitespace_on_save = 1
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \  'left': [['mode', 'paste'],
       \           ['readonly', 'filename', 'modified']],

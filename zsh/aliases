@@ -22,8 +22,12 @@ alias xclips='xclip -selection clipboard'
 alias ydl='youtube-dl'
 
 vi vim nvim(){
-    BG=`xtermcontrol --get-bg | sed -r 's/rgb:/#/; s/.{2}\///g; s/.{2}$//'`
-    /usr/bin/nvim -c "let g:terminal_bg=\"$BG\"" $@
+    BG=`xtermcontrol --get-bg 2> /dev/null | sed -r 's/rgb:/#/; s/.{2}\///g; s/.{2}$//'`
+    if [[ -z "$BG" ]]; then
+        /usr/bin/nvim $@
+    else
+        /usr/bin/nvim -c "let g:terminal_bg=\"$BG\"" $@
+    fi
 }
 
 background(){

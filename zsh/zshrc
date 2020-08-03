@@ -8,7 +8,7 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 
 bindkey -v
-bindkey -M vicmd m edit-command-line
+bindkey '^E' edit-command-line
 bindkey '^R' history-incremental-pattern-search-backward
 
 unalias run-help
@@ -27,7 +27,7 @@ _check_session() {
 }
 
 _check_todo_list() {
-    NUM=`grep -E "^\s*\[\s*]\s*\w+" ~/.todo_list | wc -l`
+    NUM=`grep -E "^\s*\[\s*]\s*\w+" ~/.todo_list 2> /dev/null | wc -l`
     if (( $NUM > 0 )); then
         echo " %F{237}|%f %F{red} $NUM%f"
     fi
