@@ -32,6 +32,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
     Plug 'morhetz/gruvbox'
     Plug 'honza/vim-snippets'
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/goyo.vim'
+    Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 " -----------------
@@ -54,17 +57,17 @@ set clipboard+=unnamedplus
 set directory=/dev/shm
 set updatetime=100
 set pumheight=10
+set inccommand=split
 " -----------------
 " Auto commands
 " -----------------
 augroup auto
     au!
     autocmd VimLeave * set guicursor=a:ver25
-    " terminal
+    " handle line numbers change
     autocmd TermOpen * silent! setlocal nonumber norelativenumber nocursorline * resize - 15
     autocmd InsertEnter * silent! setlocal norelativenumber
     autocmd InsertLeave * silent! setlocal relativenumber
-    " coc-flutter log - remove numbers
     autocmd BufEnter * if bufname() =~# ".*flutter-dev.*" | setlocal nonumber norelativenumber | endif
 augroup END
 " -----------------
@@ -75,7 +78,6 @@ colorscheme gruvbox
 " Change terminal background to match theme
 augroup theme
     au!
-    " Change terminal bg according to theme bg
     autocmd VimEnter * if exists("g:terminal_bg") | silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG()) | endif
     autocmd VimLeave * silent! :call WriteEscapeSequence("\e]11;" . fnameescape(g:terminal_bg))
     autocmd ColorScheme * if exists("g:terminal_bg") | silent! :call WriteEscapeSequence("\e]11;" . GetCurrentBG()) | endif
@@ -123,10 +125,11 @@ nnoremap <Leader>fc :CocList --input=flutter commands <CR>
 nnoremap <Leader>fr :CocCommand flutter.dev.hotReload <CR>
 nnoremap <Leader>fR :CocCommand flutter.dev.hotRestart <CR>
 " find files in path
-set path+=**
-nnoremap <Leader>ff :find<space>
+nnoremap <Leader>ff :Files <CR>
 " toggle Tagbar focus
 nnoremap <silent><expr> <Leader>tg bufname() =~# '.Tagbar.' ? "\<C-w>\<C-p>" : ":TagbarOpen fj<CR>"
+" goyo
+nnoremap <silent> <Leader>z :Goyo <CR>
 " -----------------
 " Plug-in settings
 " -----------------
@@ -166,6 +169,12 @@ let g:tagbar_compact = 1
 let g:tagbar_autoclose = 0
 " indentLine
 let g:indentLine_char = '│'
+" fzf
+let g:fzf_preview_window = 'right:60%'
+" goyo
+let g:goyo_linenr = 1
+" autopairs
+let g:AutoPairsMapSpace = 0
 " -----------------
 " Functions
 " -----------------

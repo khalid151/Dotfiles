@@ -6,3 +6,4 @@ export QT_LOGGING_RULES=qt.svg.warning=false
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/.local/share/flutter/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/Documents/Code/Python
+export QT_QPA_PLATFORMTHEME=qt5ct

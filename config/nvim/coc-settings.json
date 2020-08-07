@@ -9,10 +9,17 @@
                "directory": "/tmp/ccls"
              }
            }
+        },
+        "godot": {
+            "revealOutputChannelOn": "info",
+            "host": "127.0.0.1",
+            "filetypes": ["gd", "gdscript3"],
+            "port": 6008
         }
     },
     "coc.preferences.formatOnSaveFiletypes": [
       "dart"
     ],
+    "flutter.provider.hot-reload": false,
     "flutter.openDevLogSplitCommand": "botright 10split"
 }

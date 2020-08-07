@@ -93,7 +93,7 @@ case $TERM in
         print -Pn "\e]0;Terminal (%c)\a"
     }
     preexec () {
-        if ! [[ "$1" =~ "echo|print" ]]; then
+        if ! [[ "$1" =~ "echo|print|fzf" ]]; then
             print -Pn "\e]0;$1\a"
         fi
     }
