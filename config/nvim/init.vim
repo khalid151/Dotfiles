@@ -21,7 +21,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'hail2u/vim-css3-syntax'
     Plug 'sheerun/vim-polyglot'
-    Plug 'calviken/vim-gdscript3'
+    Plug 'habamax/vim-godot'
 
     " Others
     Plug 'ryanoasis/vim-devicons'
@@ -109,6 +109,8 @@ nnoremap <silent> <A-C-k> :resize -5 <CR>
 nnoremap <silent> <A-C-l> :vert res +5 <CR>
 nnoremap <silent> <A-C-h> :vert res -5 <CR>
 " coc
+nmap <silent> <leader>a <Plug>(coc-codeaction-selected)
+xmap <silent> <leader>a <Plug>(coc-codeaction-selected)
 nmap <silent><Leader>gd <Plug>(coc-definition)
 nmap <silent><Leader>gr <Plug>(coc-references)
 nmap <silent><Leader>gi <Plug>(coc-implementation)
@@ -118,7 +120,9 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <CR> pumvisible() ? (complete_info().selected == -1 ? "\<CR>" : "\<C-y>") : "\<CR>"
+inoremap <expr> <CR> complete_info().selected != -1 ?
+            \ &filetype == "gdscript" ? (coc#expandable() ?  "\<C-y>" : "\<Esc>a") : "\<C-y>"
+            \ : "\<C-g>u\<CR>"
 nnoremap <silent> <c-K> :call CocAction('doHover') <CR>
 " coc-flutter
 nnoremap <Leader>fc :CocList --input=flutter commands <CR>
@@ -195,6 +199,25 @@ function WriteEscapeSequence(seq)
     let command = '!printf "' . a:seq . '\007" >' . shell_fd
     exe command
 endfunction
+
+function! UvicornRun(filename, appname)
+    let term = 'term uvicorn ' . a:filename . ':' . a:appname
+    augroup uvicorn_term
+        au!
+        au TermClose * if bufname() =~# 'term.*:uvicorn' |
+                    \ call nvim_input('<CR>')
+                    \ | endif
+        au TermOpen,BufEnter * if bufname() =~# 'term.*:uvicorn' |
+                    \ setlocal statusline=\ >\ uvicorn
+                    \ | startinsert
+                    \ | endif
+    augroup END
+    exe 'belowright 10split |' . term
+endfunction
+" -----------------
+" Commands
+" -----------------
+command! -nargs=1 Uvicorn call UvicornRun(substitute(bufname(), '.py', '', ''), '<args>')
 " -----------------
 " Other stuff
 " -----------------
