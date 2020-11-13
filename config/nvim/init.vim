@@ -109,7 +109,7 @@ nnoremap <silent> <A-C-k> :resize -5 <CR>
 nnoremap <silent> <A-C-l> :vert res +5 <CR>
 nnoremap <silent> <A-C-h> :vert res -5 <CR>
 " coc
-nmap <silent> <leader>a <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>a <Plug>(coc-codeaction-line)
 xmap <silent> <leader>a <Plug>(coc-codeaction-selected)
 nmap <silent><Leader>gd <Plug>(coc-definition)
 nmap <silent><Leader>gr <Plug>(coc-references)
@@ -173,6 +173,7 @@ let g:tagbar_compact = 1
 let g:tagbar_autoclose = 0
 " indentLine
 let g:indentLine_char = '│'
+let g:indentLine_fileTypeExclude = [''] " To exclude it on terminal buffer
 " fzf
 let g:fzf_preview_window = 'right:60%'
 " goyo

@@ -1,5 +1,4 @@
 config/*
-!config/coc/extensions/package.json
 !config/nvim/init.vim
 !config/nvim/coc-settings.json
 !config/ranger/rc.conf
