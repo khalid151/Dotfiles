@@ -122,7 +122,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
 inoremap <expr> <CR> complete_info().selected != -1 ?
             \ &filetype == "gdscript" ? (coc#expandable() ?  "\<C-y>" : "\<Esc>a") : "\<C-y>"
-            \ : "\<C-g>u\<CR>"
+            \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 nnoremap <silent> <c-K> :call CocAction('doHover') <CR>
 " coc-flutter
 nnoremap <Leader>fc :CocList --input=flutter commands <CR>

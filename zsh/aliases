@@ -6,7 +6,6 @@ alias cls='printf "\033c"'
 alias diff='diff --color'
 alias go-arm='env GOARCH=arm go build'
 alias grep='grep --color=auto'
-alias hex='hyx'
 alias i3conf='vim ~/.config/i3/config'
 alias install='sudo pacman -S'
 alias ipython='ipython --no-banner'
@@ -37,4 +36,8 @@ background(){
     else
         printf "\e]11;$1\007"
     fi
+}
+
+hex(){
+    hexdump -C $@ | less
 }
