@@ -8,3 +8,4 @@ export PATH=$PATH:$HOME/.local/share/flutter/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/Documents/Code/Python
 export QT_QPA_PLATFORMTHEME=qt5ct
 export NODE_PATH=$HOME/.node_modules
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf

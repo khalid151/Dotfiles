@@ -46,7 +46,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git*' unstagedstr '𥉉'
 
 setopt histignorealldups sharehistory correctall histignoredups histignorespace\
-    autocd prompt_subst interactivecomments
+    autocd prompt_subst interactivecomments extendedglob
 
 HISTSIZE=10000000
 SAVEHIST=10000000

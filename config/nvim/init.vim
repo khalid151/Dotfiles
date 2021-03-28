@@ -30,11 +30,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'majutsushi/tagbar'
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-    Plug 'morhetz/gruvbox'
+    Plug 'ParamagicDev/vim-medic_chalk', { 'as': 'medic_chalk' }
     Plug 'honza/vim-snippets'
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/goyo.vim'
     Plug 'machakann/vim-highlightedyank'
+    Plug 'godlygeek/tabular'
 
 call plug#end()
 " -----------------
@@ -74,7 +75,7 @@ augroup END
 "  Theme options
 " -----------------
 set background=dark
-colorscheme gruvbox
+colorscheme medic_chalk
 " Change terminal background to match theme
 augroup theme
     au!
@@ -90,6 +91,7 @@ nmap <C-t> :tabnew <CR>
 nmap <Leader><Leader> :vsplit <CR>
 nnoremap <Leader>` :belowright split term://zsh <CR>
 nnoremap <Leader>pf <C-^>
+nnoremap <Leader>rg :Grep<space>
 " Alt + h,j,k,l window movement
 tnoremap <A-h> <C-\><C-N><C-w>h
 tnoremap <A-j> <C-\><C-N><C-w>j
@@ -150,7 +152,7 @@ let g:NERDTreeMinimalUI = 1
 let g:strip_whitespace_on_save = 1
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \  'left': [['mode', 'paste'],
       \           ['readonly', 'filename', 'modified']],
@@ -215,10 +217,22 @@ function! UvicornRun(filename, appname)
     augroup END
     exe 'belowright 10split |' . term
 endfunction
+
+function! ProcessRgFzf(line)
+    " line = FILE : COL : ROW : WORD
+    let l:info = split(a:line, ":")
+    execute "edit " .. l:info[0]
+    call cursor(l:info[1], l:info[2])
+    call feedkeys("*``", "n")
+endfunction
 " -----------------
 " Commands
 " -----------------
 command! -nargs=1 Uvicorn call UvicornRun(substitute(bufname(), '.py', '', ''), '<args>')
+command! -bang -nargs=* Grep
+  \ call fzf#vim#grep(
+  \   'rg -o -p --column --no-heading -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'sink': function('ProcessRgFzf')}), <bang>0)
 " -----------------
 " Other stuff
 " -----------------

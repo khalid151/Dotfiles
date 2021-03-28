@@ -1,4 +1,14 @@
 config/*
-!config/nvim/init.vim
 !config/nvim/coc-settings.json
+!config/ripgrep.conf
+
+# neovim
+!config/nvim
+config/nvim/*
+!config/nvim/init.vim
+
+# Ranger
+!config/ranger
+config/ranger/*
 !config/ranger/rc.conf
+!config/ranger/scope.sh
