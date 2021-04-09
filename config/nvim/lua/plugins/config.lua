@@ -57,3 +57,10 @@ function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
 ]], true)
+
+-- Treesitter
+require 'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true
+    },
+}

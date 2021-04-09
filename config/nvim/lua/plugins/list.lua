@@ -26,6 +26,7 @@ return function(use)
 
     -- Syntax
     use 'habamax/vim-godot'
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
     -- Color schemes
     use { 'ParamagicDev/vim-medic_chalk', as = 'medic_chalk' }
