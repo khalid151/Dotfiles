@@ -12,7 +12,6 @@ return function(use)
     use 'Yggdroot/indentLine'
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
-    use 'junegunn/fzf.vim'
     use 'junegunn/goyo.vim'
     use 'mfussenegger/nvim-dap'
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }

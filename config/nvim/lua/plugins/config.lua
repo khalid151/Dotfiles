@@ -2,7 +2,6 @@ local g = vim.g -- global variables
 
 g.AutoPairsMapSpace = 0
 g.WebDevIconsUnicodeDecorateFolderNodes = 1
-g.fzf_preview_window = 'right:60%'
 g.goyo_linenr = 1
 g.indentLine_char = '│'
 g.indentLine_fileTypeExclude = {''}

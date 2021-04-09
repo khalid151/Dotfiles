@@ -1,11 +1,22 @@
 " Helper functions
-function! ProcessRgFzf(line)
-    " line = FILE : COL : ROW : WORD
-    let l:info = split(a:line, ":")
-    execute "edit " .. l:info[0]
-    call cursor(l:info[1], l:info[2])
-    call feedkeys("*``", "n")
-endfunction
+
+lua << EOF
+_G.TelescopeGrep = function(word)
+    require 'telescope.builtin'.grep_string {
+        attach_mappings = function()
+            local actions_set = require("telescope.actions.set")
+            actions_set.select:enhance {
+                post = function()
+                    vim.fn.feedkeys("*``", "n")
+                end,
+            }
+            return true
+        end,
+        search = word,
+        prompt_title = 'Grep',
+    }
+end
+EOF
 
 function! UvicornRun(filename, appname)
     let term = 'term uvicorn ' . a:filename . ':' . a:appname
@@ -27,8 +38,4 @@ endfunction
 " --------
 "  Uvicorn
 command! -nargs=1 Uvicorn call UvicornRun(substitute(bufname(), '.py', '', ''), '<args>')
-" Grep, using rg command and displaying it in FZF window
-command! -bang -nargs=* Grep
-  \ call fzf#vim#grep(
-  \   'rg -o -p --column --no-heading -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'sink': function('ProcessRgFzf')}), <bang>0)
+command! -nargs=1 Grep lua TelescopeGrep('<args>')
