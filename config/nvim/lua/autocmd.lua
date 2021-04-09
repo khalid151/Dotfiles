@@ -20,6 +20,7 @@ augroup {
     commands = {
         { event = 'InsertEnter', pattern = '*', action = 'setlocal norelativenumber' },
         { event = 'InsertLeave', pattern = '*', action = 'setlocal relativenumber' },
+        { event = 'InsertLeave', pattern = '{}', action = 'setlocal norelativenumber' },
         { event = 'TermOpen', pattern = '*', action = 'setlocal nonumber norelativenumber nocursorline' },
     },
 }

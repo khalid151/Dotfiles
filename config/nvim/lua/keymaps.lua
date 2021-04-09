@@ -5,6 +5,9 @@ local imap = utils.imap
 local nmap = utils.nmap
 local tmap = utils.tmap
 
+-- General
+imap('<C-l>', '<Esc>A')
+
 -- Toggle explorer
 nmap('<C-e>', ':NvimTreeToggle<CR>', { silent = true })
 
@@ -46,8 +49,8 @@ nmap('<A-C-k>', ':resize -5 <CR>', { silent = true })
 nmap('<A-C-l>', ':vert res +5 <CR>', { silent = true })
 nmap('<A-C-h>', ':vert res -5 <CR>', { silent = true })
 
--- Fzf
-nmap('<Leader>ff', ':Files<CR>', { silent = true })
+-- Fuzzy finder
+nmap('<Leader>ff', ':Telescope find_files<CR>', { silent = true })
 nmap('<Leader>rg', ':Grep<space>')
 
 -- Goyo
