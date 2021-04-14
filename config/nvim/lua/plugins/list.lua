@@ -34,7 +34,20 @@ return function(use)
     -- Syntax
     use 'habamax/vim-godot'
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-
+    use {
+        'sheerun/vim-polyglot',
+        setup = function()
+            -- Disable languages that are handled by TS
+            vim.g.polyglot_disabled = {
+                "c",
+                "cpp",
+                "dart",
+                "gdscript",
+                "lua",
+                "python",
+            }
+        end,
+    }
     -- Color schemes
     use { 'ParamagicDev/vim-medic_chalk', as = 'medic_chalk' }
 end
