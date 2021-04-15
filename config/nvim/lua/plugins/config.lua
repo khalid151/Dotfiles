@@ -12,6 +12,8 @@ g.webdevicons_enable = 1
 g.webdevicons_enable_ctrlp = 1
 g.webdevicons_enable_ctrlp = 1
 g.workspace_use_devicons = 1
+g.tagbar_compact = 1
+g.tagbar_autoclose = 0
 
 -- Ultisnips disable mappings
 g.UltiSnipsExpandTrigger = "<NUL>"

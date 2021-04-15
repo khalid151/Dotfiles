@@ -13,6 +13,7 @@ return function(use)
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
     use 'junegunn/goyo.vim'
+    use 'preservim/tagbar'
     use 'mfussenegger/nvim-dap'
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use {

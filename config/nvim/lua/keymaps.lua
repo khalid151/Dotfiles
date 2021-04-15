@@ -56,6 +56,9 @@ nmap('<Leader>rg', ':Grep<space>')
 -- Goyo
 nmap('<Leader>z', ':Goyo<CR>', { silent = true })
 
+-- Tagbar
+nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen fj<CR>"', { expr = true, silent = true })
+
 -- Completion
 imap('<C-Space>', 'compe#complete()', { expr = true, silent = true })
 imap('<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true, silent = true })

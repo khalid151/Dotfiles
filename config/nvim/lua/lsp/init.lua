@@ -2,6 +2,7 @@
 -- Load LSP configs
 require("lsp.ccls")
 require("lsp.dart")
+require("lsp.haxe")
 require("lsp.lua")
 require("lsp.python")
 
