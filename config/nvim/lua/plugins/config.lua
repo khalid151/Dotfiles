@@ -15,6 +15,15 @@ g.workspace_use_devicons = 1
 g.tagbar_compact = 1
 g.tagbar_autoclose = 0
 
+-- lightline config
+g.lightline = {
+    colorscheme = 'wombat',
+    active = {
+        left = { { 'mode', 'paste' }, { 'readonly' }, { 'filename', 'modified' } },
+        right = { { 'filetype' }, { 'lineinfo' } },
+    },
+}
+
 -- Ultisnips disable mappings
 g.UltiSnipsExpandTrigger = "<NUL>"
 g.UltiSnipsJumpForwardTrigger = "<NUL>"

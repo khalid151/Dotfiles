@@ -13,6 +13,7 @@ _G.TelescopeGrep = function(word)
             return true
         end,
         search = word,
+        use_regex = true,
         prompt_title = 'Grep',
     }
 end
@@ -38,4 +39,4 @@ endfunction
 " --------
 "  Uvicorn
 command! -nargs=1 Uvicorn call UvicornRun(substitute(bufname(), '.py', '', ''), '<args>')
-command! -nargs=1 Grep lua TelescopeGrep('<args>')
+command! -nargs=1 Grep lua TelescopeGrep([[<args>]])

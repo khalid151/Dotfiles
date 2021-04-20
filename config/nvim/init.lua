@@ -18,4 +18,4 @@ utils.source("commands.vim")
 require("autocmd")
 
 -- Set theme
-utils.colorscheme("medic_chalk")
+utils.colorscheme("wombat256grf")

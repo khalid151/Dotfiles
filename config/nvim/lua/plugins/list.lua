@@ -27,13 +27,14 @@ return function(use)
 
     -- Completion
     use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/nvim-compe'
+    use 'hrsh2th/nvim-compe'
 
     -- Status and tabs
     use 'itchyny/lightline.vim'
 
     -- Syntax
     use 'habamax/vim-godot'
+    use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use {
         'sheerun/vim-polyglot',
@@ -50,5 +51,6 @@ return function(use)
         end,
     }
     -- Color schemes
-    use { 'ParamagicDev/vim-medic_chalk', as = 'medic_chalk' }
+    use 'ParamagicDev/vim-medic_chalk'
+    use 'gryf/wombat256grf'
 end
