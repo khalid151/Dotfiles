@@ -39,7 +39,7 @@ require 'compe'.setup {
         calc = false;
         nvim_lsp = true;
         nvim_lua = true;
-        vsnip = false;
+        vsnip = { priority = 1, kind = '﬌ Snippet'};
     };
 }
 

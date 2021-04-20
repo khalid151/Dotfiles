@@ -28,12 +28,17 @@ return function(use)
     -- Completion
     use 'neovim/nvim-lspconfig'
     use 'hrsh2th/nvim-compe'
+    use {
+            'hrsh7th/vim-vsnip',
+            'rafamadriz/friendly-snippets',
+            'Neevash/awesome-flutter-snippets',
+            'ylcnfrht/vscode-python-snippet-pack'
+        }
 
     -- Status and tabs
     use 'itchyny/lightline.vim'
 
     -- Syntax
-    use 'habamax/vim-godot'
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use {
@@ -50,6 +55,10 @@ return function(use)
             }
         end,
     }
+
+    -- Language specific
+    use 'habamax/vim-godot'
+
     -- Color schemes
     use 'ParamagicDev/vim-medic_chalk'
     use 'gryf/wombat256grf'

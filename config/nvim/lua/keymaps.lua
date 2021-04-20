@@ -3,7 +3,12 @@ local utils = require("utils")
 local cmap = utils.cmap
 local imap = utils.imap
 local nmap = utils.nmap
+local smap = utils.smap
 local tmap = utils.tmap
+
+local t = function(s)
+  return vim.api.nvim_replace_termcodes(s, true, true, true)
+end
 
 -- General
 imap('<C-l>', '<Esc>A')
@@ -60,11 +65,24 @@ nmap('<Leader>z', ':Goyo<CR>', { silent = true })
 nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen fj<CR>"', { expr = true, silent = true })
 
 -- Completion
+_G._item_selection = function (direction, fallback)
+  local vsnip_dir = { next = {1}, prev = {-1} }
+  if vim.fn.pumvisible() == 1 then
+    return t(string.format("<C-%s>", direction:sub(1, 1)))
+  elseif vim.fn.call("vsnip#jumpable", vsnip_dir[direction]) == 1 then
+    return t(string.format("<Plug>(vsnip-jump-%s)", direction))
+  else
+    return t(fallback)
+  end
+end
+
 imap('<C-Space>', 'compe#complete()', { expr = true, silent = true })
 imap('<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true, silent = true })
 imap('<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', { expr = true, silent = true })
-imap('<C-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, silent = true })
-imap('<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, silent = true })
+imap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
+imap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
+smap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
+smap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
 imap('<CR>', 'compe#confirm("<CR>")', { expr = true, silent = true })
 imap('<C-e>', 'compe#close("<C-e>")', { expr = true, silent = true })
 imap('<Esc>', 'pumvisible() ? compe#close("\\<C-e>") : "\\<Esc>"', { expr = true, silent = true })
