@@ -58,6 +58,7 @@ return function(use)
 
     -- Language specific
     use 'habamax/vim-godot'
+    use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
 
     -- Color schemes
     use 'ParamagicDev/vim-medic_chalk'
