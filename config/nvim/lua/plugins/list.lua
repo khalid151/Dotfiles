@@ -32,11 +32,11 @@ return function(use)
             'hrsh7th/vim-vsnip',
             'rafamadriz/friendly-snippets',
             'Neevash/awesome-flutter-snippets',
-            'ylcnfrht/vscode-python-snippet-pack'
+            'ylcnfrht/vscode-python-snippet-pack',
         }
 
     -- Status and tabs
-    use 'itchyny/lightline.vim'
+    use { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end }
 
     -- Syntax
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
@@ -58,9 +58,11 @@ return function(use)
 
     -- Language specific
     use 'habamax/vim-godot'
+    use 'stevearc/vim-arduino'
     use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
 
     -- Color schemes
     use 'ParamagicDev/vim-medic_chalk'
     use 'gryf/wombat256grf'
+    use 'folke/tokyonight.nvim'
 end
