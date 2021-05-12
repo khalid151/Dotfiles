@@ -24,6 +24,7 @@ return function(use)
             'nvim-telescope/telescope-fzy-native.nvim',
         }
     }
+    use { 'numtostr/FTerm.nvim', config = function() require'FTerm'.setup() end }
 
     -- Completion
     use 'neovim/nvim-lspconfig'

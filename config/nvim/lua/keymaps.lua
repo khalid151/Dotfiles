@@ -22,8 +22,9 @@ nmap('<C-t>', ':tabnew<CR>', { silent = true })
 -- Split current file view
 nmap('<Leader><Leader>', ':vsplit<CR>', { silent = true })
 
--- Open terminal
-nmap('<Leader>`', ':belowright split term://zsh<CR>', { silent = true })
+-- Open terminal (floating terminal toggle)
+nmap('<Leader>`', ':lua require"FTerm".toggle()<CR>', { silent = true })
+tmap('<Leader>`', '<C-\\><C-N>:lua require"FTerm".toggle()<CR>', { silent = true })
 
 -- Previous file toggle
 nmap('<Leader>pf', '<C-^>')
