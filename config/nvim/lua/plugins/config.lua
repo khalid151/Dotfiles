@@ -15,24 +15,25 @@ g.workspace_use_devicons = 1
 g.tagbar_compact = 1
 g.tagbar_autoclose = 0
 
--- Vsnip
-g.vsnip_filetypes = {
-    arduino = { 'cpp' },
-}
+if vim.g.lsp_imp == "native" then
+    -- Vsnip
+    g.vsnip_filetypes = {
+        arduino = { 'cpp' },
+    }
+    -- Compe config
+    require 'compe'.setup {
+        throttle_time = 20;
 
--- Compe config
-require 'compe'.setup {
-    throttle_time = 20;
-
-    source = {
-        path = true;
-        buffer = true;
-        calc = false;
-        nvim_lsp = true;
-        nvim_lua = true;
-        vsnip = { priority = 1, kind = '﬌ Snippet'};
-    };
-}
+        source = {
+            path = true;
+            buffer = true;
+            calc = false;
+            nvim_lsp = true;
+            nvim_lua = true;
+            vsnip = { priority = 1, kind = '﬌ Snippet'};
+        };
+    }
+end
 
 -- Configure gitsigns
 require 'gitsigns'.setup {
@@ -83,8 +84,6 @@ require 'telescope'.setup {
                 ["<C-k>"] = actions.move_selection_previous,
             }
         },
-        preview_cutoff = 80,
-        results_width = 0.5,
     },
     extensions = {
         fzy_native = {

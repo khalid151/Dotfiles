@@ -7,7 +7,7 @@ local active = {
     lualine_b = { 'branch' },
     lualine_c = { { 'filename', file_status = true } },
     lualine_x = {
-        { 'diagnostics', sources = {'nvim_lsp'} },
+        { 'diagnostics', sources = {'nvim_lsp', 'coc'} },
         {
             function()
                 local g = vim.g

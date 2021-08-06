@@ -27,14 +27,20 @@ return function(use)
     use { 'numtostr/FTerm.nvim', config = function() require'FTerm'.setup() end }
 
     -- Completion
-    use 'neovim/nvim-lspconfig'
-    use 'hrsh2th/nvim-compe'
-    use {
-            'hrsh7th/vim-vsnip',
-            'rafamadriz/friendly-snippets',
-            'Neevash/awesome-flutter-snippets',
-            'ylcnfrht/vscode-python-snippet-pack',
-        }
+    if vim.g.lsp_imp == "native" then
+        use 'neovim/nvim-lspconfig'
+        use 'hrsh7th/nvim-compe'
+        use {
+                'hrsh7th/vim-vsnip',
+                'rafamadriz/friendly-snippets',
+                'Neevash/awesome-flutter-snippets',
+                'ylcnfrht/vscode-python-snippet-pack',
+            }
+        use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
+    else
+        use { 'neoclide/coc.nvim', branch = 'release' }
+        use 'honza/vim-snippets'
+    end
 
     -- Status and tabs
     use { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end }
@@ -60,7 +66,6 @@ return function(use)
     -- Language specific
     use 'habamax/vim-godot'
     use 'stevearc/vim-arduino'
-    use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
 
     -- Color schemes
     use 'ParamagicDev/vim-medic_chalk'

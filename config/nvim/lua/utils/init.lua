@@ -32,7 +32,7 @@ local map = function(mode, keys, action, opts)
     vim.api.nvim_set_keymap(mode, keys, action, options)
 end
 
-for _, m in ipairs { 'c', 'i', 'n', 's', 't' } do
+for _, m in ipairs { 'c', 'i', 'n', 's', 't', 'x' } do
     utils[m .. 'map'] = function(keys, action, opts) map(m, keys, action, opts) end
 end
 
