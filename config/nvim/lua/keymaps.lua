@@ -15,7 +15,7 @@ end
 imap('<C-l>', '<Esc>A')
 
 -- Toggle explorer
-nmap('<C-e>', ':NvimTreeToggle<CR>', { silent = true })
+nmap('<C-e>', 'bufname() =~# "NvimTree" ? ":NvimTreeClose<CR>" : ":NvimTreeFocus<CR>"', { expr = true, silent = true })
 
 -- New tab
 nmap('<C-t>', ':tabnew<CR>', { silent = true })
@@ -71,10 +71,10 @@ imap('<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true, silent = tr
 imap('<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', { expr = true, silent = true })
 
 if vim.g.lsp_imp == "native" then
-  -- compe
   _G._item_selection = function (direction, fallback)
     local vsnip_dir = { next = {1}, prev = {-1} }
-    if vim.fn.pumvisible() == 1 then
+    local cmp = require("cmp")
+    if cmp.visible() then
       return t(string.format("<C-%s>", direction:sub(1, 1)))
     elseif vim.fn.call("vsnip#jumpable", vsnip_dir[direction]) == 1 then
       return t(string.format("<Plug>(vsnip-jump-%s)", direction))
@@ -83,14 +83,10 @@ if vim.g.lsp_imp == "native" then
     end
   end
 
-  imap('<C-Space>', 'compe#complete()', { expr = true, silent = true })
   imap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
   imap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
   smap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
   smap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
-  imap('<CR>', 'compe#confirm("<CR>")', { expr = true, silent = true })
-  imap('<C-e>', 'compe#close("<C-e>")', { expr = true, silent = true })
-  imap('<Esc>', 'pumvisible() ? compe#close("\\<C-e>") : "\\<Esc>"', { expr = true, silent = true })
 
   nmap('<Leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
   nmap('<Leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { silent = true })

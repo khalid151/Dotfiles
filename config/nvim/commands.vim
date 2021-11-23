@@ -34,9 +34,16 @@ function! UvicornRun(filename, appname)
     exe 'belowright 10split |' . term
 endfunction
 
+function! ConfigNvim()
+    cd ~/.config/nvim
+    edit init.lua
+    NvimTreeOpen
+    wincmd p
+    Telescope find_files
+endfunction
+
 " --------
 " Commands
 " --------
-"  Uvicorn
 command! -nargs=1 Uvicorn call UvicornRun(substitute(bufname(), '.py', '', ''), '<args>')
 command! -nargs=1 Grep lua TelescopeGrep([[<args>]])

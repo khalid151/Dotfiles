@@ -3,18 +3,27 @@ return function(use)
     use 'wbthomason/packer.nvim'
 
     -- General
-    use 'mhinz/vim-startify'
-    use 'kyazdani42/nvim-tree.lua'
     use 'scrooloose/nerdcommenter'
-    use 'jiangmiao/auto-pairs'
-    use 'tpope/vim-surround'
-    use 'ntpeters/vim-better-whitespace'
     use 'Yggdroot/indentLine'
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
-    use 'junegunn/goyo.vim'
-    use 'preservim/tagbar'
     use 'mfussenegger/nvim-dap'
+    use 'numtostr/FTerm.nvim'
+    use 'glepnir/dashboard-nvim'
+    use { 'windwp/nvim-autopairs', event = 'InsertEnter', config = [[require('nvim-autopairs').setup{}]] }
+    use { 'tpope/vim-surround', event = 'InsertEnter' }
+    use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' }
+    use { 'junegunn/goyo.vim', ft = {'text', 'markdown'} }
+    use { 'preservim/tagbar', ft = {'c', 'cpp'} }
+    use { 'kyazdani42/nvim-tree.lua', config = function()
+        require'nvim-tree'.setup {
+            update_cwd = true,
+            filters = {
+                dotfiles = true,
+            }
+        }
+        end
+    }
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
     use {
         'nvim-telescope/telescope.nvim',
@@ -24,33 +33,61 @@ return function(use)
             'nvim-telescope/telescope-fzy-native.nvim',
         }
     }
-    use { 'numtostr/FTerm.nvim', config = function() require'FTerm'.setup() end }
 
     -- Completion
-    if vim.g.lsp_imp == "native" then
-        use 'neovim/nvim-lspconfig'
-        use 'hrsh7th/nvim-compe'
-        use {
-                'hrsh7th/vim-vsnip',
-                'rafamadriz/friendly-snippets',
-                'Neevash/awesome-flutter-snippets',
-                'ylcnfrht/vscode-python-snippet-pack',
+    use {
+        'neovim/nvim-lspconfig',
+        config = [[ require('lsp') ]],
+        disable = not vim.g.lsp_imp == "native",
+    }
+    use {
+        'hrsh7th/nvim-cmp',
+        event = 'InsertEnter',
+        config = [[ require('plugins.config.cmp') ]],
+        disable = not vim.g.lsp_imp == "native",
+    }
+    use {
+        'onsails/lspkind-nvim',
+        after = 'nvim-cmp',
+        config = function()
+            local cmp = require('cmp')
+            local fmt = require('lspkind').cmp_format
+            cmp.setup {
+                formatting = {
+                    format = fmt {}
+                }
             }
-        use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
-    else
-        use { 'neoclide/coc.nvim', branch = 'release' }
-        use 'honza/vim-snippets'
-    end
+        end,
+    }
+    -- Completion sources
+    use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
+    use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
+    use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
+    use { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' }
+    use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
+    use { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' }
+    -- Snippets
+    use { 'hrsh7th/vim-vsnip', after = 'nvim-cmp' }
+    use {
+        'rafamadriz/friendly-snippets',
+        'Neevash/awesome-flutter-snippets',
+    }
+    --use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use {
+        'neoclide/coc.nvim', branch = 'release',
+        disable = vim.g.lsp_imp == "native",
+    }
+    use { 'honza/vim-snippets', after = 'coc.nvim' }
 
     -- Status and tabs
     use { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end }
 
     -- Syntax
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use {
         'sheerun/vim-polyglot',
-        setup = function()
+        config = function()
             -- Disable languages that are handled by TS
             vim.g.polyglot_disabled = {
                 "c",

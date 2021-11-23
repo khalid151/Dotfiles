@@ -3,17 +3,13 @@ local utils = require("utils")
 -- Store PID of current shell, useful to change backgrounds
 vim.g.shell_pid = vim.fn.system('ps -oppid= -p `ps -oppid= $$`')
 
-vim.g.lsp_imp = "coc"
+vim.g.lsp_imp = "native"
 
 -- Editor options
 require("settings")
 
 -- Load plugins and LSP
 require("plugins")
-
-if vim.g.lsp_imp == "native" then
-    require("lsp")
-end
 
 -- Configure keybindings
 require("keymaps")
