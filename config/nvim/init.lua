@@ -10,6 +10,7 @@ require("settings")
 
 -- Load plugins and LSP
 require("plugins")
+require("plugins.tabline")
 
 -- Configure keybindings
 require("keymaps")
