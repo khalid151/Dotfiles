@@ -30,4 +30,7 @@ local packer = require("packer").startup(plugins_list)
 -- Load plugin config
 require("plugins.config")
 
+-- Load tabline
+require("plugins.tabline")
+
 return packer
