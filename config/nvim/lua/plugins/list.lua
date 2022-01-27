@@ -24,7 +24,7 @@ return function(use)
         }
         end
     }
-    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -32,6 +32,10 @@ return function(use)
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
         }
+    }
+    use {
+        'nvim-neorg/neorg', requires = 'nvim-lua/plenary.nvim',
+        config = [[ require('plugins.config.neorg') ]],
     }
 
     -- Completion
@@ -103,6 +107,7 @@ return function(use)
     -- Language specific
     use 'habamax/vim-godot'
     use 'stevearc/vim-arduino'
+    use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
 
     -- Color schemes
     use 'ParamagicDev/vim-medic_chalk'

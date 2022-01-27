@@ -9,6 +9,7 @@ cmp.setup {
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
+        { name = 'neorg' },
         { name = 'vsnip' },
         { name = 'buffer' },
         { name = 'path' },
@@ -47,3 +48,18 @@ cmp.setup {
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
+
+-- Load completion for neorg
+local neorg = require("neorg")
+
+local function load_completion()
+    neorg.modules.load_module("core.norg.completion", nil, {
+        engine = "nvim-cmp"
+    })
+end
+
+if neorg.is_loaded() then
+    load_completion()
+else
+    neorg.callbacks.on_event("core.started", load_completion)
+end
