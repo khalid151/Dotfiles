@@ -92,7 +92,7 @@ return function(use)
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use {
         'sheerun/vim-polyglot',
-        config = function()
+        setup = function()
             -- Disable languages that are handled by TS
             vim.g.polyglot_disabled = {
                 "c",
