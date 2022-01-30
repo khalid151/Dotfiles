@@ -5,9 +5,18 @@ require('neorg').setup {
         ["core.norg.dirman"] = {
             config = {
                 workspaces = {
-                    my_workspace = "~/.local/neorg",
+                    neorg = "~/Documents/Neorg/",
                 },
             },
         },
+        ["core.gtd.base"] = {
+            config = {
+                workspace = "gtd",
+                default_lists = {
+                    inbox = "inbox.norg",
+                },
+            },
+        },
+        ["core.integrations.telescope"] = {},
     },
 }

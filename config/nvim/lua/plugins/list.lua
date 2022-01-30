@@ -37,6 +37,7 @@ return function(use)
         'nvim-neorg/neorg', requires = 'nvim-lua/plenary.nvim',
         config = [[ require('plugins.config.neorg') ]],
     }
+    use { 'nvim-neorg/neorg-telescope', requires = 'nvim-neorg/neorg' }
 
     -- Completion
     use {
