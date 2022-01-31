@@ -95,9 +95,9 @@ if vim.g.lsp_imp == "native" then
   nmap('<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { silent = true })
   nmap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', { silent = true })
   nmap('<C-k>',  '<cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true })
-  nmap('<C-n>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', { silent = true })
-  nmap('<C-p>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', { silent = true })
-  nmap('<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', { silent = true })
+  nmap('<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', { silent = true })
+  nmap('<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { silent = true })
+  nmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { silent = true })
 else
   -- coc.nvim
   nmap('<Leader>a', '<Plug>(coc-codeaction-line)', { noremap = false, silent = true })
