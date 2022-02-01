@@ -67,7 +67,7 @@ return function(use)
     use {
         'ray-x/lsp_signature.nvim',
         after = 'nvim-cmp',
-        config = [[ require('lsp_signature').setup {} ]],
+        config = [[ require('lsp_signature').setup { doc_lines = 0, hint_enable = false } ]],
     }
     -- Completion sources
     use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
