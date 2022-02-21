@@ -13,7 +13,6 @@ return function(use)
     use { 'windwp/nvim-autopairs', event = 'InsertEnter', config = [[require('nvim-autopairs').setup{}]] }
     use { 'tpope/vim-surround', event = 'InsertEnter' }
     use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' }
-    use { 'junegunn/goyo.vim', ft = {'text', 'markdown'} }
     use { 'preservim/tagbar', ft = {'c', 'cpp'} }
     use { 'kyazdani42/nvim-tree.lua', config = function()
         require'nvim-tree'.setup {

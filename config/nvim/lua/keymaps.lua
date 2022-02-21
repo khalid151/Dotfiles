@@ -60,9 +60,6 @@ nmap('<A-C-h>', ':vert res -5 <CR>', { silent = true })
 nmap('<Leader>ff', ':Telescope find_files<CR>', { silent = true })
 nmap('<Leader>rg', ':Grep<space>')
 
--- Goyo
-nmap('<Leader>z', ':Goyo<CR>', { silent = true })
-
 -- Tagbar
 nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen fj<CR>"', { expr = true, silent = true })
 

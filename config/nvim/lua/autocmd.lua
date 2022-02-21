@@ -55,15 +55,6 @@ augroup {
     },
 }
 
--- Goyo change line number
-autocmd {
-    event = 'User GoyoEnter',
-    action = v_function('_goyo_linenr', function()
-        local bg = utils.get_highlight("normal", "bg")
-        vim.api.nvim_command("highlight LineNr guibg=" .. bg)
-    end),
-}
-
 -- Gitsigns color
 autocmd {
     event = 'ColorScheme',
