@@ -6,6 +6,7 @@ require('neorg').setup {
             config = {
                 workspaces = {
                     neorg = "~/Documents/Neorg/",
+                    gtd = "~/Documents/Neorg/GTD",
                 },
             },
         },
