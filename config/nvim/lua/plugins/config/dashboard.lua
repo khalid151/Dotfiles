@@ -134,10 +134,10 @@ vim.g.dashboard_custom_section = custom_sections {
         command = 'DashboardNewFile',
     },
     {
-        icon = '',
-        description = 'Find File',
-        shortcut = 'BSL f f',
-        command = 'DashboardFindFile',
+        icon = 'ﴬ',
+        description = 'Start Neorg',
+        shortcut = 'BSL n s',
+        command = 'NeorgStart',
     },
     {
         icon = '',
@@ -161,6 +161,7 @@ utils.autocmd {
         local options = { silent = true, buffer = true }
         utils.nmap('<Leader>fn', ':DashboardNewFile<CR>', options)
         utils.nmap('<Leader>fh', ':DashboardFindHistory<CR>', options)
+        utils.nmap('<Leader>ns', ':NeorgStart<CR>', options)
         utils.nmap('<Leader>cc', ':call ConfigNvim()<CR>', options)
     end)
 }
