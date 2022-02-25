@@ -15,7 +15,7 @@ end
 imap('<C-l>', '<Esc>A')
 
 -- Toggle explorer
-nmap('<C-e>', 'bufname() =~# "NvimTree" ? ":NvimTreeClose<CR>" : ":NvimTreeFocus<CR>"', { expr = true, silent = true })
+nmap('<C-b>', 'bufname() =~# "NvimTree" ? ":NvimTreeClose<CR>" : ":NvimTreeFocus<CR>"', { expr = true, silent = true })
 
 -- New tab
 nmap('<C-t>', ':tabnew<CR>', { silent = true })
