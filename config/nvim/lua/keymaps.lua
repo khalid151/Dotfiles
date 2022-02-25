@@ -36,6 +36,18 @@ cmap('<C-k>', '<up>')
 cmap('<C-h>', '<left>')
 cmap('<C-l>', '<right>')
 
+-- Clear first search highlight
+_G._clear_search = function()
+  local cmd = vim.fn.getcmdtype()
+  if cmd == "/" or cmd == "?" then
+    return t("<CR> :noh<CR>b")
+  end
+
+  return t("<CR>")
+end
+
+cmap('<CR>', 'v:lua._clear_search()', { silent = true, expr = true, noremap = true })
+
 -- Alt + h,j,k,l window movement
 tmap('<A-h>', '<C-\\><C-N><C-w>h')
 tmap('<A-j>', '<C-\\><C-N><C-w>j')
