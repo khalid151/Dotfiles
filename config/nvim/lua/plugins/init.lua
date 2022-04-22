@@ -14,13 +14,13 @@ end
 utils.autocmd {
     event = "BufWritePost",
     pattern = "*/plugins/list.lua",
-    action = utils.v_function("_reload_plugins", function()
+    action = function()
         -- unload plugins since they were cached
         package.loaded["plugins"] = nil
         package.loaded["plugins.list"] = nil
         -- reload and compile
         require("plugins").compile()
-    end),
+    end,
 }
 
 -- Load plugins

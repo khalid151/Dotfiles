@@ -157,11 +157,11 @@ vim.g.dashboard_custom_section = custom_sections {
 utils.autocmd {
     event = 'FileType',
     pattern = 'dashboard',
-    action = utils.v_function("_set_dashboard_shortcuts", function ()
+    action = function ()
         local options = { silent = true, buffer = true }
         utils.nmap('<Leader>fn', ':DashboardNewFile<CR>', options)
         utils.nmap('<Leader>fh', ':DashboardFindHistory<CR>', options)
         utils.nmap('<Leader>ns', ':NeorgStart<CR>', options)
         utils.nmap('<Leader>cc', ':call ConfigNvim()<CR>', options)
-    end)
+    end,
 }

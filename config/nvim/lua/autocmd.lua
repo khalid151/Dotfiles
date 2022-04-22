@@ -2,7 +2,6 @@ local utils = require("utils")
 
 local autocmd = utils.autocmd
 local augroup = utils.augroup
-local v_function = utils.v_function
 
 -- Highlight on yank
 autocmd {
@@ -18,9 +17,10 @@ autocmd { event = 'VimLeave', action = 'set guicursor=a:ver25' }
 augroup {
     name = 'nums',
     commands = {
-        { event = 'InsertEnter', pattern = '*', action = 'setlocal norelativenumber' },
-        { event = 'InsertLeave', pattern = '*', action = 'setlocal relativenumber' },
+        { event = 'InsertEnter', action = 'setlocal norelativenumber' },
+        { event = 'InsertLeave', action = 'setlocal relativenumber' },
         { event = 'InsertLeave', pattern = '{}', action = 'setlocal norelativenumber' },
+        { event = 'BufEnter', pattern = 'Flutter*Outline', action = 'setlocal nonumber norelativenumber' },
         { event = 'TermOpen', pattern = '*', action = 'setlocal nonumber norelativenumber nocursorline' },
     },
 }
@@ -37,20 +37,20 @@ augroup {
         {
             event = { 'VimEnter', 'ColorScheme' },
             pattern = '*',
-            action = v_function('_set_term_bg', function()
+            action = function()
                 if vim.g.terminal_bg then
                     local bg = utils.get_highlight("normal", "bg")
                     set_terminal_bg(bg)
                 end
-            end),
+            end,
         },
         {
             event = 'VimLeave',
             pattern = '*',
-            action = v_function('_restore_term_bg', function()
+            action = function()
                 local bg = vim.g.terminal_bg
                 if bg then set_terminal_bg(bg) end
-            end),
+            end,
         }
     },
 }
@@ -59,7 +59,7 @@ augroup {
 autocmd {
     event = 'ColorScheme',
     pattern = '*',
-    action = v_function('_change_signs_color', function()
+    action = function()
         local bg = utils.get_highlight("SignColumn", "bg")
         bg = bg == '' and utils.get_highlight("normal", "bg") or bg
         for group, color in pairs {
@@ -69,5 +69,16 @@ autocmd {
             } do
             utils.set_highlight(group, { guifg = color, guibg = bg })
         end
-    end),
+    end,
+}
+
+-- Format dart on save
+autocmd {
+    event = 'BufWritePost',
+    pattern = '*.dart',
+    action = function ()
+        local file = vim.fn.bufname()
+        vim.fn.system('dart format ' .. file)
+        vim.api.nvim_command('e')
+    end,
 }

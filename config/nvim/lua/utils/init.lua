@@ -51,70 +51,25 @@ utils.esc_write = function(pid, sequence)
     end
 end
 
--- To create objects with functions that will be added to the global namespace
--- and has call_string() method that returns a string vim can use
-local v_function_mt = {
-    __call = function(self) self.action() end,
-    __tostring = function(self) return self.name end,
-}
-
--- create v_function object
-utils.v_function = function(name, action)
-    assert(type(name) == "string", "v_function name must be set")
-    assert(type(action) == "function", "v_function action must be set")
-
-    local v_func = {
-        name = name,
-        action = action,
-    }
-    setmetatable(v_func, v_function_mt)
-
-    -- Add to global namespace
-    _G[name] = v_func
-
-    v_func.call_string = function(self)
-        return string.format(":call v:lua.%s()", self.name)
-    end
-    v_func.v_string = function(self)
-        return string.format("v:lua.%s()", self.name)
-    end
-
-    return v_func
-end
-
-local compile_au_string = function(event, pattern, action)
-    -- try to compile multiple actions into one string
-    local events = ''
-    if type(event) == "table" then
-        events = table.concat(event, ',')
-    elseif type(event) == "string" then
-        events = event
-    end
-
-    -- construct an action command accordingly
-    local action_cmd = ''
-    if type(action) == "table" or type(action) == "function" then
-        assert(getmetatable(action) == v_function_mt, "action is not v_function object")
-        action_cmd = action:call_string()
-    else
-        action_cmd = action
-    end
-
-    -- TODO: Option for silent and extra stuff?
-    return string.format("autocmd %s %s %s", events, pattern or '', action_cmd)
-end
-
 -- Functions to create auto commands
 -- args = {
 --      event = Event name or a table of multiple events,
---      action = string -> vimscript command, v_function -> lua code
+--      action = string -> vimscript command, function -> lua code
 -- }
 utils.autocmd = function(args)
-    -- check if event and action not set
     assert(args.event, "Event name is not set")
     assert(args.action, "Action is not set")
-    local au = compile_au_string(args.event, args.pattern, args.action)
-    vim.api.nvim_command(au)
+
+    local event = args.event
+    local opts = vim.tbl_extend('force', args, {
+        callback = type(args.action) == "function" and args.action or nil,
+        command = type(args.action) == "string" and args.action or nil,
+    })
+
+    opts.event = nil
+    opts.action = nil
+
+    vim.api.nvim_create_autocmd(event, opts)
 end
 
 -- args = {
@@ -125,17 +80,13 @@ utils.augroup = function(args)
     assert(args.name, "Group name is not set")
     assert(args.commands, "Commands are not set")
     assert(#args.commands > 0, "Commands cannot be empty")
-    local cmd = vim.api.nvim_command
 
-    cmd("augroup " .. args.name)
-    cmd("au!")
+    local id = vim.api.nvim_create_augroup(args.name, { clear = true })
 
     for _, command in ipairs(args.commands) do
         if type(command) ~= "table" then break end
-        utils.autocmd(command)
+        utils.autocmd(vim.tbl_extend('force', command, { group = id }))
     end
-
-    cmd("augroup END")
 end
 
 -- Helper function to source vimscript files
