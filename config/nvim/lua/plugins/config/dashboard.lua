@@ -8,11 +8,11 @@ local custom_headers = {
         ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
     },
     {
-        '',
-        '      █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
-        '      █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
-        '      ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
-        '',
+        --'',
+        --'      █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
+        --'      █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
+        --'      ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
+        --'',
         '',
         '        ⢀⣴⡾⠃⠄⠄⠄⠄⠄⠈⠺⠟⠛⠛⠛⠛⠻⢿⣿⣿⣿⣿⣶⣤⡀  ',
         '      ⢀⣴⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣸⣿⣿⣿⣿⣿⣿⣿⣷ ',
@@ -33,11 +33,11 @@ local custom_headers = {
         '',
     },
     {
-        '',
-        '    █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
-        '    █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
-        '    ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
-        '',
+        --'',
+        --'    █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
+        --'    █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
+        --'    ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
+        --'',
         ' ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ ',
         ' ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ ',
         ' ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ ',
@@ -55,12 +55,12 @@ local custom_headers = {
         '',
     },
     {
-        '',
-        '    █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
-        '    █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
-        '    ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
-        '',
-        '',
+        --'',
+        --'    █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
+        --'    █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
+        --'    ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
+        --'',
+        --'',
         '⡆⣐⢕⢕⢕⢕⢕⢕⢕⢕⠅⢗⢕⢕⢕⢕⢕⢕⢕⠕⠕⢕⢕⢕⢕⢕⢕⢕⢕⢕',
         '⢐⢕⢕⢕⢕⢕⣕⢕⢕⠕⠁⢕⢕⢕⢕⢕⢕⢕⢕⠅⡄⢕⢕⢕⢕⢕⢕⢕⢕⢕',
         '⢕⢕⢕⢕⢕⠅⢗⢕⠕⣠⠄⣗⢕⢕⠕⢕⢕⢕⠕⢠⣿⠐⢕⢕⢕⠑⢕⢕⠵⢕',
@@ -78,11 +78,11 @@ local custom_headers = {
         '',
     },
     {
-        '',
-        '   █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
-        '   █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
-        '   ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
-        '',
+        --'',
+        --'   █▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
+        --'   █░█░█▀▀░█░█░▀▄▀░░█░░█░█',
+        --'   ▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
+        --'',
         '⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⡿⠿⢿⣿⣿⣿⣿⣿⣿',
         '⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠛⠉⠉⠉⠙⠻⣅⠀⠈⢧⠀⠈⠛⠉⠉⢻⣿⣿',
         '⣿⣿⣿⣿⣿⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⣤⡶⠟⠀⠀⣈⠓⢤⣶⡶⠿⠛⠻⣿',
@@ -101,32 +101,34 @@ local custom_headers = {
 }
 
 local utils = require("utils")
+local dashboard = require("dashboard")
+
+dashboard.custom_header = custom_headers[4]
+dashboard.hide_statusline = true
 
 local section = function(args)
-    local max_width = args.line_width or 40
+    local max_width = args.line_width or 30
     local shortcut = args.shortcut or ''
-    local format = string.format("%%s  %%-%ds %%s", max_width - shortcut:len())
+    local format = string.format("%%-%ds", max_width - shortcut:len())
 
     return {
-        description = { string.format(format, args.icon, args.description, shortcut) },
-        command = args.command,
+        icon = args.icon .. ' ',
+        desc = string.format(format, args.description),
+        shortcut = args.shortcut,
+        action = args.command,
     }
 end
 
 local custom_sections = function(args)
     local tb = {}
     for _,v in ipairs(args) do
-        tb[string.format('%02d', _)] = section(v)
+        tb[_] = section(v)
     end
 
     return tb
 end
 
-vim.g.dashboard_custom_header = custom_headers[3]
-vim.g.dashboard_custom_footer = {""}
-vim.g.dashboard_default_executive = "telescope"
-
-vim.g.dashboard_custom_section = custom_sections {
+dashboard.custom_center = custom_sections {
     {
         icon = '',
         description = 'New File',
@@ -138,12 +140,6 @@ vim.g.dashboard_custom_section = custom_sections {
         description = 'Start Neorg',
         shortcut = 'BSL n s',
         command = 'NeorgStart',
-    },
-    {
-        icon = '',
-        description = 'Recently Opened Files',
-        shortcut = 'BSL f h',
-        command = 'DashboardFindHistory',
     },
     {
         icon = '',
