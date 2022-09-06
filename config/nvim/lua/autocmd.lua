@@ -55,6 +55,16 @@ augroup {
     },
 }
 
+-- Cursorline
+augroup {
+    name = 'curline',
+    commands = {
+        { event = 'WinEnter', action = 'setlocal cursorline' },
+        { event = 'WinLeave', action = 'setlocal nocursorline' },
+        { event = 'WinEnter', pattern = '{}', action = 'setlocal nocursorline' },
+    },
+}
+
 -- Gitsigns color
 autocmd {
     event = 'ColorScheme',
@@ -73,12 +83,12 @@ autocmd {
 }
 
 -- Format dart on save
-autocmd {
-    event = 'BufWritePost',
-    pattern = '*.dart',
-    action = function ()
-        local file = vim.fn.bufname()
-        vim.fn.system('dart format ' .. file)
-        vim.api.nvim_command('e')
-    end,
-}
+--autocmd {
+    --event = 'BufWritePost',
+    --pattern = '*.dart',
+    --action = function ()
+        --local file = vim.fn.bufname()
+        --vim.fn.system('dart format ' .. file)
+        --vim.api.nvim_command('e')
+    --end,
+--}

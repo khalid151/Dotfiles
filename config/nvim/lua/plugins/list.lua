@@ -10,7 +10,20 @@ return function(use)
     use 'mfussenegger/nvim-dap'
     use 'numtostr/FTerm.nvim'
     use 'glepnir/dashboard-nvim'
-    use { 'windwp/nvim-autopairs', event = 'InsertEnter', config = [[require('nvim-autopairs').setup{}]] }
+    use {
+        'windwp/nvim-autopairs', after = 'nvim-cmp',
+        config = function ()
+            require("nvim-autopairs").setup {}
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            require'cmp'.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
+        end,
+    }
+    use {
+        'abecodes/tabout.nvim',
+        config = [[ require('tabout').setup {} ]],
+        wants = 'nvim-treesitter',
+        after = 'nvim-cmp',
+    }
     use { 'tpope/vim-surround', event = 'InsertEnter' }
     use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' }
     use { 'preservim/tagbar', ft = {'c', 'cpp'} }
@@ -41,6 +54,7 @@ return function(use)
     -- Completion
     use {
         'neovim/nvim-lspconfig',
+        after = 'nvim-cmp',
         config = [[ require('lsp') ]],
         disable = not vim.g.lsp_imp == "native",
     }
@@ -81,7 +95,6 @@ return function(use)
         'rafamadriz/friendly-snippets',
         'Neevash/awesome-flutter-snippets',
     }
-    --use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
     use {
         'neoclide/coc.nvim', branch = 'release',
         disable = vim.g.lsp_imp == "native",
@@ -94,6 +107,7 @@ return function(use)
     -- Syntax
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { 'nvim-treesitter/playground' }
     use {
         'sheerun/vim-polyglot',
         setup = function()
@@ -118,4 +132,6 @@ return function(use)
     use 'ParamagicDev/vim-medic_chalk'
     use 'gryf/wombat256grf'
     use 'folke/tokyonight.nvim'
+    use 'EdenEast/nightfox.nvim'
+    use 'savq/melange'
 end

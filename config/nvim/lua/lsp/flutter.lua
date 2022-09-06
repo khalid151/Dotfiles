@@ -1,4 +1,5 @@
 require("flutter-tools").setup {
+    outline = { open_cmd = '45vnew' },
     flutter_path = os.getenv("HOME") .. "/.local/share/flutter/bin/flutter",
 }
 

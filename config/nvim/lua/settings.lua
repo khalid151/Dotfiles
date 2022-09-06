@@ -11,8 +11,6 @@ require 'utils'.set_options {
         completeopt= 'menuone,noselect',
         directory = '/dev/shm',
         expandtab = true,
-        foldexpr = 'nvim_treesitter#foldexpr()',
-        foldmethod = 'expr',
         ignorecase = true,
         inccommand = 'split',
         mouse = 'a',

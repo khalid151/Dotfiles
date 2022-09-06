@@ -6,15 +6,14 @@ require('neorg').setup {
             config = {
                 workspaces = {
                     neorg = "~/Documents/Neorg/",
-                    gtd = "~/Documents/Neorg/GTD",
                 },
             },
         },
         ["core.gtd.base"] = {
             config = {
-                workspace = "gtd",
+                workspace = "neorg",
                 default_lists = {
-                    inbox = "inbox.norg",
+                    inbox = "GTD/inbox.norg",
                 },
             },
         },

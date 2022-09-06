@@ -1,6 +1,6 @@
 local lualine = require("lualine")
 
-local theme = 'tokyonight'
+local theme = 'auto'
 
 local active = {
     lualine_a = { 'mode' },
@@ -40,3 +40,5 @@ lualine.setup {
     inactive_sections = inactive,
     extensions = { 'nvim-tree' },
 }
+
+vim.opt.laststatus = 3

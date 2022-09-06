@@ -19,4 +19,4 @@ utils.source("commands.vim")
 require("autocmd")
 
 -- Set theme
-utils.colorscheme("tokyonight")
+utils.colorscheme("terafox")

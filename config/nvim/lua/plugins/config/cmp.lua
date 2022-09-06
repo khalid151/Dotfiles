@@ -19,7 +19,7 @@ cmp.setup {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<CR>'] = function(fallback)
-            if cmp.get_active_entry() then
+            if cmp.get_selected_entry() then
                 cmp.confirm { select = true }
             else
                 fallback()
@@ -44,10 +44,8 @@ cmp.setup {
             c = cmp.mapping.close(),
         },
     },
+    preselect = cmp.PreselectMode.None,
 }
-
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
 
 -- Load completion for neorg
 local neorg = require("neorg")
