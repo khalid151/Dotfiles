@@ -107,7 +107,7 @@ if vim.g.lsp_imp == "native" then
   nmap('<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', { silent = true })
   nmap('<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { silent = true })
   nmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { silent = true })
-  nmap('<Leader>ga', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+  nmap('<Leader>ga', "<cmd>CodeActionMenu<CR>", { silent = true })
   xmap('<Leader>ga', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
 else
   -- coc.nvim

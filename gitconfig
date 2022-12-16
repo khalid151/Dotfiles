@@ -1,6 +1,7 @@
 [user]
 	name = Khalid J.
 	email = khalid.y96@outlook.com
+	signingkey = khalid.y96@outlook.com
 [color]
 	ui = auto
 [core]
@@ -9,3 +10,7 @@
 	tool = nvimdiff
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg

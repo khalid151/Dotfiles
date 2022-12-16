@@ -1,0 +1,13 @@
+preview krita .kra {{
+    PREVIEW_CACHE=/tmp/kra_file_ctpv_preview_$id
+    unzip -p "$f" preview.png > $PREVIEW_CACHE
+    setup_image
+    send_image $PREVIEW_CACHE
+}}
+
+preview aseprite .aseprite {{
+    PREVIEW_CACHE=~/.cache/ctpv/`basename -s ".aseprite" "$f"`.png
+    [ -f "$PREVIEW_CACHE" ] || aseprite -b --oneframe --frame-range 0,0 "$f" --scale 8 --save-as "$PREVIEW_CACHE"
+    setup_image
+    send_image $PREVIEW_CACHE
+}}

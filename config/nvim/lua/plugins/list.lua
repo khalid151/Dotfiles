@@ -45,10 +45,10 @@ return function(use)
             'nvim-telescope/telescope-fzy-native.nvim',
         }
     }
-    use {
-        'nvim-neorg/neorg', requires = 'nvim-lua/plenary.nvim',
-        config = [[ require('plugins.config.neorg') ]],
-    }
+    --use {
+        --'nvim-neorg/neorg', requires = 'nvim-lua/plenary.nvim',
+        --config = [[ require('plugins.config.neorg') ]],
+    --}
     use { 'nvim-neorg/neorg-telescope', requires = 'nvim-neorg/neorg' }
 
     -- Completion
@@ -58,6 +58,7 @@ return function(use)
         config = [[ require('lsp') ]],
         disable = not vim.g.lsp_imp == "native",
     }
+    use { 'weilbith/nvim-code-action-menu', after = 'nvim-cmp', config = function() vim.g.code_action_menu_show_diff = false end}
     use {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
@@ -134,4 +135,8 @@ return function(use)
     use 'folke/tokyonight.nvim'
     use 'EdenEast/nightfox.nvim'
     use 'savq/melange'
+    use {
+        "ViViDboarder/wombat.nvim",
+        requires = "rktjmp/lush.nvim",
+    }
 end

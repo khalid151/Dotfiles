@@ -1,0 +1,60 @@
+%[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
+
+set shell zsh
+set drawbox
+set icons
+set info size
+set ratios 1:2:2
+
+# Commands
+cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
+cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
+cmd on-cd &{{
+    # '&' commands run silently in background (which is what we want here),
+    # but are not connected to stdout.
+    # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
+    printf "\033]0; $PWD\007" > /dev/tty
+}}
+
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        image/*)
+        if [ -z "$fs" ]; then
+            rifle_sxiv.sh $f
+        else
+            echo $fs | sxiv -a -b -i
+        fi
+        ;;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+cmd extract ${{
+    set -f
+    atool -x $f
+}}
+
+cmd grep-toggle ${{
+    res="`rg -l -g '!*/' $1`"
+    if [ ! -z "$res" ]; then
+        while IFS= read -r item; do
+            lf -remote "send $id toggle \"$item\""
+        done <<< "$res"
+    fi
+}}
+
+# Mappings
+map O push :open-with-gui<space> ## input application
+map o push :open-with-cli<space> ## input application
+map <enter> open
+map gt push :grep-toggle<space>
+map D delete
+
+on-cd
+
+# Previews
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
