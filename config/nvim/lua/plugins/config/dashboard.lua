@@ -154,7 +154,7 @@ utils.autocmd {
     event = 'FileType',
     pattern = 'dashboard',
     action = function ()
-        local options = { silent = true, buffer = true }
+        local options = { silent = true, buffer = 0 }
         utils.nmap('<Leader>fn', ':DashboardNewFile<CR>', options)
         utils.nmap('<Leader>fh', ':DashboardFindHistory<CR>', options)
         utils.nmap('<Leader>ns', ':NeorgStart<CR>', options)

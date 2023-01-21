@@ -54,7 +54,7 @@ return function(use)
     -- Completion
     use {
         'neovim/nvim-lspconfig',
-        after = 'nvim-cmp',
+        --after = 'nvim-cmp',
         config = [[ require('lsp') ]],
         disable = not vim.g.lsp_imp == "native",
     }
@@ -125,18 +125,14 @@ return function(use)
     }
 
     -- Language specific
-    use 'habamax/vim-godot'
+    use 'lommix/godot.nvim'
     use 'stevearc/vim-arduino'
     use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
 
     -- Color schemes
-    use 'ParamagicDev/vim-medic_chalk'
-    use 'gryf/wombat256grf'
     use 'folke/tokyonight.nvim'
     use 'EdenEast/nightfox.nvim'
     use 'savq/melange'
-    use {
-        "ViViDboarder/wombat.nvim",
-        requires = "rktjmp/lush.nvim",
-    }
+    use 'shaunsingh/nord.nvim'
+    use 'daschw/leaf.nvim'
 end

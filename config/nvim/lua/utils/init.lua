@@ -29,12 +29,7 @@ end
 local map = function(mode, keys, action, opts)
     local options = { noremap = true }
     if opts then options = vim.tbl_extend('force', options, opts) end
-    if options.buffer == true then
-        options.buffer = nil
-        vim.api.nvim_buf_set_keymap(0, mode, keys, action, options)
-    else
-        vim.api.nvim_set_keymap(mode, keys, action, options)
-    end
+    vim.keymap.set(mode, keys, action, options)
 end
 
 for _, m in ipairs { 'c', 'i', 'n', 's', 't', 'x' } do
