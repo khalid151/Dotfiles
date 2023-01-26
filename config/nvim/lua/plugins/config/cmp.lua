@@ -3,28 +3,28 @@ local cmp = require("cmp")
 cmp.setup {
     snippet = {
         expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            require("luasnip").lsp_expand(args.body)
         end,
       },
+    window = {
+        completion = {
+            scrollbar = false,
+        },
+        documentation = cmp.config.window.bordered(),
+    },
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
         { name = 'neorg' },
-        { name = 'vsnip' },
+        { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
     },
-    mapping = {
+    mapping = cmp.mapping.preset.insert {
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<CR>'] = function(fallback)
-            if cmp.get_selected_entry() then
-                cmp.confirm { select = true }
-            else
-                fallback()
-            end
-        end,
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
         ['<Tab>'] = function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -41,23 +41,7 @@ cmp.setup {
         end,
         ['<Esc>'] = cmp.mapping {
             i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
         },
     },
     preselect = cmp.PreselectMode.None,
 }
-
--- Load completion for neorg
-local neorg = require("neorg")
-
-local function load_completion()
-    neorg.modules.load_module("core.norg.completion", nil, {
-        engine = "nvim-cmp"
-    })
-end
-
-if neorg.is_loaded() then
-    load_completion()
-else
-    neorg.callbacks.on_event("core.started", load_completion)
-end

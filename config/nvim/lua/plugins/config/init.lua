@@ -12,11 +12,6 @@ g.workspace_use_devicons = 1
 g.tagbar_compact = 1
 g.tagbar_autoclose = 0
 
--- Vsnip
-g.vsnip_filetypes = {
-    arduino = { 'cpp' },
-}
-
 -- Configure gitsigns
 require 'gitsigns'.setup {
     signs = {

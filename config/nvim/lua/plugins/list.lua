@@ -54,8 +54,11 @@ return function(use)
     -- Completion
     use {
         'neovim/nvim-lspconfig',
-        --after = 'nvim-cmp',
+        after = 'nvim-cmp',
         config = [[ require('lsp') ]],
+        requires = {
+            { 'hrsh7th/cmp-nvim-lsp' }, -- For capabilities
+        },
         disable = not vim.g.lsp_imp == "native",
     }
     use { 'weilbith/nvim-code-action-menu', after = 'nvim-cmp', config = function() vim.g.code_action_menu_show_diff = false end}
@@ -86,12 +89,12 @@ return function(use)
     -- Completion sources
     use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
     use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
-    use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
     use { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' }
     use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
     use { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' }
+    use { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' }
     -- Snippets
-    use { 'hrsh7th/vim-vsnip', after = 'nvim-cmp' }
+    use { 'L3MON4D3/LuaSnip', after = 'nvim-cmp', config = [[ require('plugins.config.luasnip')]] }
     use {
         'rafamadriz/friendly-snippets',
         'Neevash/awesome-flutter-snippets',

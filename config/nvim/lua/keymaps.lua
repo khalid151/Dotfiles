@@ -37,7 +37,7 @@ cmap('<C-h>', '<left>')
 cmap('<C-l>', '<right>')
 
 -- Clear first search highlight
-_G._clear_search = function()
+local clear_search = function()
   local cmd = vim.fn.getcmdtype()
   if cmd == "/" or cmd == "?" then
     return t("<CR> :noh<CR>b")
@@ -46,7 +46,7 @@ _G._clear_search = function()
   return t("<CR>")
 end
 
-cmap('<CR>', 'v:lua._clear_search()', { silent = true, expr = true, noremap = true })
+cmap('<CR>', clear_search, { silent = true, expr = true, noremap = true })
 
 -- Alt + h,j,k,l window movement
 tmap('<A-h>', '<C-\\><C-N><C-w>h')
@@ -75,28 +75,11 @@ nmap('<Leader>rg', ':Grep<space>')
 -- Tagbar
 nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen fj<CR>"', { expr = true, silent = true })
 
--- Completion
-imap('<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true, silent = true })
-imap('<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<C-h>"', { expr = true, silent = true })
+-- Gitsigns
+nmap(']c', ':Gitsigns next_hunk<CR>', { silent = true })
+nmap('[c', ':Gitsigns previous_hunk<CR>', { silent = true })
 
 if vim.g.lsp_imp == "native" then
-  _G._item_selection = function (direction, fallback)
-    local vsnip_dir = { next = {1}, prev = {-1} }
-    local cmp = require("cmp")
-    if cmp.visible() then
-      return t(string.format("<C-%s>", direction:sub(1, 1)))
-    elseif vim.fn.call("vsnip#jumpable", vsnip_dir[direction]) == 1 then
-      return t(string.format("<Plug>(vsnip-jump-%s)", direction))
-    else
-      return t(fallback)
-    end
-  end
-
-  imap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
-  imap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
-  smap('<C-j>', 'v:lua._item_selection("next", "<C-j>")', { expr = true, noremap = false })
-  smap('<C-k>', 'v:lua._item_selection("prev", "<C-k>")', { expr = true, noremap = false })
-
   nmap('<Leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
   nmap('<Leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { silent = true })
   nmap('<Leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', { silent = true })
