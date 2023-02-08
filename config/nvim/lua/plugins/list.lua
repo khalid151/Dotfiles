@@ -9,7 +9,7 @@ return function(use)
     use 'kyazdani42/nvim-web-devicons'
     use 'mfussenegger/nvim-dap'
     use 'numtostr/FTerm.nvim'
-    use 'glepnir/dashboard-nvim'
+    use { "glepnir/dashboard-nvim", commit = "f7d623457d6621b25a1292b24e366fae40cb79ab" }
     use {
         'windwp/nvim-autopairs', after = 'nvim-cmp',
         config = function ()
@@ -45,11 +45,6 @@ return function(use)
             'nvim-telescope/telescope-fzy-native.nvim',
         }
     }
-    --use {
-        --'nvim-neorg/neorg', requires = 'nvim-lua/plenary.nvim',
-        --config = [[ require('plugins.config.neorg') ]],
-    --}
-    use { 'nvim-neorg/neorg-telescope', requires = 'nvim-neorg/neorg' }
 
     -- Completion
     use {
