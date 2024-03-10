@@ -3,12 +3,16 @@ return function(use)
     use 'wbthomason/packer.nvim'
 
     -- General
-    use 'scrooloose/nerdcommenter'
-    use 'Yggdroot/indentLine'
+    use 'lukas-reineke/indent-blankline.nvim'
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
-    use 'mfussenegger/nvim-dap'
     use 'numtostr/FTerm.nvim'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use { 'numToStr/Comment.nvim', config = [[ require('plugins.config.comment') ]]}
+    use { 'folke/todo-comments.nvim', config = [[ require('todo-comments').setup { } ]], event = 'InsertEnter'}
+    use { 'tpope/vim-surround', event = 'InsertEnter' }
+    use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' } use { 'preservim/tagbar', ft = {'c', 'cpp'} }
+    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use { "glepnir/dashboard-nvim", commit = "f7d623457d6621b25a1292b24e366fae40cb79ab" }
     use {
         'windwp/nvim-autopairs', after = 'nvim-cmp',
@@ -24,9 +28,6 @@ return function(use)
         wants = 'nvim-treesitter',
         after = 'nvim-cmp',
     }
-    use { 'tpope/vim-surround', event = 'InsertEnter' }
-    use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' }
-    use { 'preservim/tagbar', ft = {'c', 'cpp'} }
     use { 'kyazdani42/nvim-tree.lua', config = function()
         require'nvim-tree'.setup {
             update_cwd = true,
@@ -36,7 +37,6 @@ return function(use)
         }
         end
     }
-    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -44,6 +44,18 @@ return function(use)
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
         }
+    }
+    use {
+      "folke/which-key.nvim",
+      config = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 500
+        require("which-key").setup {
+            icons = {
+                separator = '>',
+            }
+        }
+      end
     }
 
     -- Completion

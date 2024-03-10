@@ -77,7 +77,7 @@ nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen f
 
 -- Gitsigns
 nmap(']c', ':Gitsigns next_hunk<CR>', { silent = true })
-nmap('[c', ':Gitsigns previous_hunk<CR>', { silent = true })
+nmap('[c', ':Gitsigns prev_hunk<CR>', { silent = true })
 
 if vim.g.lsp_imp == "native" then
   nmap('<Leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
