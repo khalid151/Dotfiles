@@ -26,14 +26,14 @@ utils.set_options = function (options)
 end
 
 -- Keybinding functions
-local map = function(mode, keys, action, opts)
+utils.map = function(mode, keys, action, opts)
     local options = { noremap = true }
     if opts then options = vim.tbl_extend('force', options, opts) end
     vim.keymap.set(mode, keys, action, options)
 end
 
 for _, m in ipairs { 'c', 'i', 'n', 's', 't', 'x' } do
-    utils[m .. 'map'] = function(keys, action, opts) map(m, keys, action, opts) end
+    utils[m .. 'map'] = function(keys, action, opts) utils.map(m, keys, action, opts) end
 end
 
 -- Helper function to write escape sequence to a pid
@@ -106,6 +106,14 @@ utils.set_highlight = function(group, attributes)
         attrs = attrs .. string.format(' %s=%s', k, v)
     end
     vim.api.nvim_command('hi ' .. group .. attrs)
+end
+
+utils.lazy_theme = function (link)
+    return {
+        link,
+        lazy = false,
+        priority = 1000,
+    }
 end
 
 return utils

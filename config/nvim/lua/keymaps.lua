@@ -79,37 +79,19 @@ nmap('<Leader>tg', 'bufname() =~# ".Tagbar." ? "\\<C-w>\\<C-p>" : ":TagbarOpen f
 nmap(']c', ':Gitsigns next_hunk<CR>', { silent = true })
 nmap('[c', ':Gitsigns prev_hunk<CR>', { silent = true })
 
-if vim.g.lsp_imp == "native" then
-  nmap('<Leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
-  nmap('<Leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { silent = true })
-  nmap('<Leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', { silent = true })
-  nmap('<Leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { silent = true })
-  nmap('<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { silent = true })
-  nmap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', { silent = true })
-  nmap('<C-k>',  '<cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true })
-  nmap('<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', { silent = true })
-  nmap('<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { silent = true })
-  nmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { silent = true })
-  nmap('<Leader>ga', "<cmd>CodeActionMenu<CR>", { silent = true })
-  xmap('<Leader>ga', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
-else
-  -- coc.nvim
-  nmap('<Leader>a', '<Plug>(coc-codeaction-line)', { noremap = false, silent = true })
-  xmap('<Leader>a', '<Plug>(coc-codeaction-selected)', { noremap = false, silent = true })
+-- Todo
+nmap('<Leader>td', ':TodoQuickFix<CR>', { silent = true })
 
-  imap('<C-Space>', 'coc#refresh()', { expr = true, silent = true })
-  imap('<Esc>', [[pumvisible() ? "\<C-e>" : "\<Esc>"]], { expr = true, silent = true })
-  imap('<CR>', [[ complete_info().selected != -1 ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-  ]], { expr = true, silent = true })
-
-  nmap('<Leader>gd', '<Plug>(coc-definition)', { noremap = false, silent = true })
-  nmap('<Leader>gD', '<Plug>(coc-declaration)', { noremap = false, silent = true })
-  nmap('<Leader>gr', '<Plug>(coc-references)', { noremap = false, silent = true })
-  nmap('<Leader>gi', '<Plug>(coc-implementation)', { noremap = false, silent = true })
-  nmap('<Leader>gy', '<Plug>(coc-type-definition)', { noremap = false, silent = true })
-  nmap('<Leader>rn', '<Plug>(coc-rename)', { noremap = false, silent = true })
-  nmap('K', ':call CocAction("doHover")<CR>', { silent = true })
-  nmap('<C-n>', '<Plug>(coc-diagnostic-next)', { noremap = false, silent = true })
-  nmap('<C-p>', '<Plug>(coc-diagnostic-prev)', { noremap = false, silent = true })
-  nmap('<space>e', '<Plug>(coc-diagnostic-info)', { noremap = false, silent = true })
-end
+-- LSP
+nmap('<Leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { silent = true })
+nmap('<Leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { silent = true })
+nmap('<Leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', { silent = true })
+nmap('<Leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { silent = true })
+nmap('<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { silent = true })
+nmap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', { silent = true })
+nmap('<C-k>',  '<cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true })
+nmap('<C-n>', '<cmd>lua vim.diagnostic.goto_next()<CR>', { silent = true })
+nmap('<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { silent = true })
+nmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { silent = true })
+nmap('<Leader>ga', "<cmd>CodeActionMenu<CR>", { silent = true })
+xmap('<Leader>ga', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })

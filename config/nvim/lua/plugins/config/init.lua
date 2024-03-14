@@ -12,15 +12,16 @@ g.WebDevIconsUnicodeDecorateFolderNodes = 1
 g.workspace_use_devicons = 1
 g.tagbar_compact = 1
 g.tagbar_autoclose = 0
+g.coq_settings = { auto_start = true }
 
 -- Configure gitsigns
-require 'gitsigns'.setup {
-    signs = {
-        add = { text = '+', hl = 'GitAdd' },
-        change = { text = '~', hl = 'GitChange' },
-        delete = { text = '-', hl = 'GitRemove' },
-    },
-}
+-- require 'gitsigns'.setup {
+--    signs = {
+--        add = { text = '+', hl = 'GitAdd' },
+--        change = { text = '~', hl = 'GitChange' },
+--        delete = { text = '-', hl = 'GitRemove' },
+--    },
+--}
 
 for hl_group, color in pairs {
     GitAdd = 'green',
@@ -37,5 +38,5 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 
-require("plugins.config.dashboard")
-require("plugins.config.telescope")
+-- require("plugins.config.dashboard")
+-- require("plugins.config.telescope")

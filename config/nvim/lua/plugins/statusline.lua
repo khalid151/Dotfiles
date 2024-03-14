@@ -18,7 +18,7 @@ local active = {
         },
     },
     lualine_y = { 'filetype' },
-    lualine_z = { 'location' },
+    lualine_z = { { 'location', icon = '󰦨', cond = function() return not (vim.api.nvim_get_mode().mode == 't') end } },
 }
 
 local inactive = {

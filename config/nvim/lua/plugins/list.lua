@@ -1,51 +1,103 @@
-return function(use)
-    -- Manage packer
-    use 'wbthomason/packer.nvim'
+local theme = require('utils').lazy_theme
 
-    -- General
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'ryanoasis/vim-devicons'
-    use 'kyazdani42/nvim-web-devicons'
-    use 'numtostr/FTerm.nvim'
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-    use { 'numToStr/Comment.nvim', config = [[ require('plugins.config.comment') ]]}
-    use { 'folke/todo-comments.nvim', config = [[ require('todo-comments').setup { } ]], event = 'InsertEnter'}
-    use { 'tpope/vim-surround', event = 'InsertEnter' }
-    use { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = 'vim.cmd[[EnableWhitespace]]' } use { 'preservim/tagbar', ft = {'c', 'cpp'} }
-    use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
-    use { "glepnir/dashboard-nvim", commit = "f7d623457d6621b25a1292b24e366fae40cb79ab" }
-    use {
-        'windwp/nvim-autopairs', after = 'nvim-cmp',
+return {
+    -- Colors
+    theme 'EdenEast/nightfox.nvim',
+
+    -- No lazy :c
+    'ryanoasis/vim-devicons',
+    'kyazdani42/nvim-web-devicons',
+    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+
+    -- Completion, Highlights & Code
+    { 'neovim/nvim-lspconfig', config = function() require 'lsp' end }, -- event = { 'BufReadPost', 'BufNewFile' }, cmd = { 'LspInfo', 'LspInstall', 'LspUninstall' }},
+    { 'folke/todo-comments.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, opts = {}, cmd = {'TodoQuickFix', 'TodoLocList', 'TodoTelescope', 'TodoTrouble'}},
+    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    { 'kylechui/nvim-surround', event = { 'InsertEnter', 'VeryLazy' }, opts = {} },
+    { 'ntpeters/vim-better-whitespace', event = 'BufWritePre *', config = function() vim.cmd[[EnableWhitespace]] end },
+    { 'akinsho/flutter-tools.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, ft = 'dart'},
+    { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu', config = function() vim.g.code_action_menu_show_diff = false end},
+    {
+        'ray-x/lsp_signature.nvim',
+        event = 'InsertEnter',
+        config = function(_, opts) require 'lsp_signature'.on_attach(opts) end,
+        opts = { hint_prefix = ' ' },
+    },
+    {
+        'numToStr/Comment.nvim', config = function() require('plugins.config.comment') end,
+        event = 'InsertEnter',
+        keys = {
+            '<Leader>cc',
+            { '<Leader>c', mode = 'v' },
+        },
+    },
+    {
+        'L3MON4D3/LuaSnip', config = function() require'plugins.config.luasnip' end,
+        event = 'InsertEnter',
+        dependencies = {
+            'hrsh7th/nvim-cmp',
+            'rafamadriz/friendly-snippets',
+            'Neevash/awesome-flutter-snippets',
+        },
+    },
+    {
+        'hrsh7th/nvim-cmp', event = 'InsertEnter',
+        config = function() require 'plugins.config.cmp' end,
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'saadparwaiz1/cmp_luasnip',
+        },
+    },
+    {
+        'onsails/lspkind-nvim',
+        event = 'InsertEnter',
+        config = function()
+            local cmp = require('cmp')
+            local fmt = require('lspkind').cmp_format
+            cmp.setup {
+                formatting = {
+                    format = fmt {}
+                }
+            }
+        end,
+    },
+    {
+        'windwp/nvim-autopairs', dependencies = { 'hrsh7th/nvim-cmp' },
+        event = 'InsertEnter',
         config = function ()
             require("nvim-autopairs").setup {}
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             require'cmp'.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
         end,
-    }
-    use {
-        'abecodes/tabout.nvim',
-        config = [[ require('tabout').setup {} ]],
-        wants = 'nvim-treesitter',
-        after = 'nvim-cmp',
-    }
-    use { 'kyazdani42/nvim-tree.lua', config = function()
-        require'nvim-tree'.setup {
-            update_cwd = true,
-            filters = {
-                dotfiles = true,
+    },
+
+    -- Misc
+    { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end },
+    { 'numtostr/FTerm.nvim', ft = 'FTerm' },
+    { 'kyazdani42/nvim-tree.lua',
+        cmd = 'NvimTreeFocus',
+        config = function()
+            require'nvim-tree'.setup {
+                update_cwd = true,
+                filters = {
+                    dotfiles = true,
+                }
             }
-        }
         end
-    }
-    use {
+    },
+    {
         'nvim-telescope/telescope.nvim',
-        requires = {
+        cmd = 'Telescope',
+        dependencies = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim',
         }
-    }
-    use {
+    },
+    {
       "folke/which-key.nvim",
       config = function()
         vim.o.timeout = true
@@ -56,93 +108,5 @@ return function(use)
             }
         }
       end
-    }
-
-    -- Completion
-    use {
-        'neovim/nvim-lspconfig',
-        after = 'nvim-cmp',
-        config = [[ require('lsp') ]],
-        requires = {
-            { 'hrsh7th/cmp-nvim-lsp' }, -- For capabilities
-        },
-        disable = not vim.g.lsp_imp == "native",
-    }
-    use { 'weilbith/nvim-code-action-menu', after = 'nvim-cmp', config = function() vim.g.code_action_menu_show_diff = false end}
-    use {
-        'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
-        config = [[ require('plugins.config.cmp') ]],
-        disable = not vim.g.lsp_imp == "native",
-    }
-    use {
-        'onsails/lspkind-nvim',
-        after = 'nvim-cmp',
-        config = function()
-            local cmp = require('cmp')
-            local fmt = require('lspkind').cmp_format
-            cmp.setup {
-                formatting = {
-                    format = fmt {}
-                }
-            }
-        end,
-    }
-    use {
-        'ray-x/lsp_signature.nvim',
-        after = 'nvim-cmp',
-        config = [[ require('lsp_signature').setup { doc_lines = 0, hint_enable = false } ]],
-    }
-    -- Completion sources
-    use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
-    use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }
-    use { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' }
-    use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
-    use { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' }
-    use { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' }
-    -- Snippets
-    use { 'L3MON4D3/LuaSnip', after = 'nvim-cmp', config = [[ require('plugins.config.luasnip')]] }
-    use {
-        'rafamadriz/friendly-snippets',
-        'Neevash/awesome-flutter-snippets',
-    }
-    use {
-        'neoclide/coc.nvim', branch = 'release',
-        disable = vim.g.lsp_imp == "native",
-    }
-    use { 'honza/vim-snippets', after = 'coc.nvim' }
-
-    -- Status and tabs
-    use { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end }
-
-    -- Syntax
-    use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use { 'nvim-treesitter/playground' }
-    use {
-        'sheerun/vim-polyglot',
-        setup = function()
-            -- Disable languages that are handled by TS
-            vim.g.polyglot_disabled = {
-                "c",
-                "cpp",
-                "dart",
-                "gdscript",
-                "lua",
-                "python",
-            }
-        end,
-    }
-
-    -- Language specific
-    use 'lommix/godot.nvim'
-    use 'stevearc/vim-arduino'
-    use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
-
-    -- Color schemes
-    use 'folke/tokyonight.nvim'
-    use 'EdenEast/nightfox.nvim'
-    use 'savq/melange'
-    use 'shaunsingh/nord.nvim'
-    use 'daschw/leaf.nvim'
-end
+    },
+}

@@ -25,6 +25,8 @@ require 'utils'.set_options {
         termguicolors = true,
         title = true,
         updatetime = 100,
+        laststatus = 3,
+        showtabline = 2,
     },
     w = {
         cursorline = true,
