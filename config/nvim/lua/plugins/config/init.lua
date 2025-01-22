@@ -15,13 +15,13 @@ g.tagbar_autoclose = 0
 g.coq_settings = { auto_start = true }
 
 -- Configure gitsigns
--- require 'gitsigns'.setup {
---    signs = {
---        add = { text = '+', hl = 'GitAdd' },
---        change = { text = '~', hl = 'GitChange' },
---        delete = { text = '-', hl = 'GitRemove' },
---    },
---}
+require 'gitsigns'.setup {
+   signs = {
+       add = { text = '+' },
+       change = { text = '~' },
+       delete = { text = '-' },
+   },
+}
 
 for hl_group, color in pairs {
     GitAdd = 'green',

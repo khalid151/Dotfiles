@@ -95,3 +95,11 @@ nmap('<C-p>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { silent = true })
 nmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { silent = true })
 nmap('<Leader>ga', "<cmd>CodeActionMenu<CR>", { silent = true })
 xmap('<Leader>ga', "<cmd>lua vim.lsp.buf.code_action()<CR>", { silent = true })
+
+-- DAP
+nmap('<Leader>dd', ':DapToggleBreakpoint<CR>', { silent = true })
+nmap('<Leader>dc', ':DapContinue<CR>', { silent = true })
+nmap('<Leader>di', ':DapStepInto<CR>', { silent = true })
+nmap('<Leader>do', ':DapStepOver<CR>', { silent = true })
+nmap('<Leader>dO', ':DapStepOut<CR>', { silent = true })
+nmap('<Leader>dt', ':DapUiToggle<CR>', { silent = true})

@@ -2,7 +2,9 @@ local theme = require('utils').lazy_theme
 
 return {
     -- Colors
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = { transparent_background = true } },
     theme 'EdenEast/nightfox.nvim',
+    theme 'Abstract-IDE/Abstract-cs',
 
     -- No lazy :c
     'ryanoasis/vim-devicons',
@@ -73,6 +75,26 @@ return {
             require'cmp'.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
         end,
     },
+    {
+        'mfussenegger/nvim-dap',
+        cmd = { 'DapToggleBreakpoint', 'DapContinue', 'DapUiToggle' },
+        dependencies = {
+            'rcarriga/nvim-dap-ui',
+            'nvim-neotest/nvim-nio',
+            'theHamsta/nvim-dap-virtual-text',
+        },
+        config = function()
+            require('plugins.config.dap')
+            vim.api.nvim_create_user_command('DapUiToggle', function()
+                require("dapui").toggle()
+            end, {desc = 'Toggle DAP UI'})
+        end,
+    },
+    {
+      'mrcjkb/rustaceanvim',
+      version = '^5',
+      lazy = false,
+    },
 
     -- Misc
     { 'hoob3rt/lualine.nvim', config = function() require'plugins.statusline' end },
@@ -109,4 +131,6 @@ return {
         }
       end
     },
+    { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'godlygeek/tabular', cmd='Tabularize' },
 }

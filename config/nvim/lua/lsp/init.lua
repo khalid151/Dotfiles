@@ -1,9 +1,7 @@
 require("lsp.c")
--- require("lsp.flutter")
 require("lsp.gdscript")
 require("lsp.lua")
 require("lsp.python")
-require("lsp.rust")
 
 -- Diagnostics configuration
 local signs = {
